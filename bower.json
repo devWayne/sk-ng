@@ -1,0 +1,15 @@
+{
+  "name": "sk-ng",
+  "description": "second-kill project",
+  "version": "0.0.1",
+  "homepage": "https://github.com/devWayne/sk-ng.git",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "angular-route": "~1.2.x",
+    "jquery": "1.10.2"
+  }
+}
+

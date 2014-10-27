@@ -1,0 +1,17 @@
+	<div class="miaosha-deal-content" ng-controller="skDealistCtrl">
+	  <ul>
+            <li ng-reeat="deal in deals">
+	    <a href="#/deal/{{deal.dealId}}">
+	       	<img ng-src={{deal.imgUrl}} alt="">
+		<div class="miaosha-deal-text">
+			<p class="miaosha-deal-title">{{deal.title}}</p>
+			<p class="miaosha-deal-intro">{{deal.intro}}</p>
+			<div class="miaosha-deal-price">
+		          <span class="oneprize nowprize">￥{{deal.price}}</span>
+			  <span class="twoprize del">￥{{deal.priceold}}</span>
+			</div>
+		</div>
+	    </a>
+	    </li>
+	  </ul>
+	</div>
