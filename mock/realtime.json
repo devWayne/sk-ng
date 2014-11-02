@@ -1,0 +1,7 @@
+{	
+	"realTimeInfo":[
+	{"dealId":1001,"currentJoin":10,"wannaJoin":1010},
+	{"dealId":1002,"currentJoin":20,"wannaJoin":2020},
+	{"dealId":1003,"currentJoin":30,"wannaJoin":3030}	
+	]
+}

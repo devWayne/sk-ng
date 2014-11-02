@@ -1,11 +1,17 @@
- 'use strict';
- 
  /* App Module */
 
 var skApp = angular.module('skApp', [
+  'underscore',
   'ngRoute',
+  'skDirs',
+  'skFilters',
   'skControllers'
 ]);
+
+var underscore=angular.module('underscore',[]);
+underscore.factory('_',function(){
+	return window._;
+});
 
 skApp.config(['$routeProvider',
   function($routeProvider) {
