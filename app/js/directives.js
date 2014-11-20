@@ -40,7 +40,7 @@ skDirectives.directive('timer', function() {
                 sT = 1000,
                 count = 61;
 
-            setInterval(
+            var timer=setInterval(
                 function() {
                     count++;
                     if (count > 60) {
@@ -51,6 +51,7 @@ skDirectives.directive('timer', function() {
                     }
                     if ($scope.coming_seconds == 0) {
                         $scope.$parent.status = 1;
+			clearInterval(timer);
                     }
 		    else{
 		    	$scope.$parent.status = 0;

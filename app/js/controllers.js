@@ -5,9 +5,8 @@ var skControllers = angular.module('skControllers', ['underscore']);
 skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
     function($scope, $http, _) {
 
-        var statusList = ['即将开抢', '抢购中'];
-	/** tiemr **/
-	//$scope.timer=[];
+        /** tiemr **/
+        //$scope.timer=[];
 
         /** share popup **/
         $scope.share_visable = false;
@@ -25,16 +24,14 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
                     val.wannaJoins = $scope.joins[idx].wannaJoin;
                 });
             })**/
-            $scope.statusWords = statusList[$scope.status];
         });
-
     }
 ]);
 
 
 skControllers.controller('skDealCtrl', ['$scope', '$routeParams',
     function($scope, $routeParams) {
-	$scope.overlay_flag=0;
+        $scope.overlay_flag = 0;
         $scope.phoneId = $routeParams.phoneId;
     }
 ]);

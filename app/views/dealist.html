@@ -9,7 +9,7 @@
 
 
 <div class="nav nav-s">
-		<span class="nav-tag">{{statusWords}}</span>
+	<span class="nav-tag"> <span ng-if="status == 0">即将开抢</span> <span ng-if="status == 1">抢购中</span></span>
 		<span class="nav-tag-border"></span>
 		<span class="nav-countdown" ng-hide="status">
 			距开抢<timer></timer>
