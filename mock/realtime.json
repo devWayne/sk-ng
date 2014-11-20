@@ -1,7 +1,6 @@
-{	
-	"realTimeInfo":[
-	{"dealId":1001,"currentJoin":10,"wannaJoin":1010},
-	{"dealId":1002,"currentJoin":20,"wannaJoin":2020},
-	{"dealId":1003,"currentJoin":30,"wannaJoin":3030}	
-	]
+{
+    "current_time": "2014-11-19 10:11:00",
+    "coming_seconds": 130000000,
+    "sale_status": 1,
+    "status": "OK"
 }

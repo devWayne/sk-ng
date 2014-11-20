@@ -1,3 +1,3 @@
 sk-ng
 =====
-second kill with angularJs
+#大众点评一元秒杀运营场景

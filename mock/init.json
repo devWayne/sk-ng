@@ -1,25 +1,24 @@
-{	
-			"initDealInfo": [{
-				"dealId":1001,
-				"title": "食之密本期1",
-				"intro": "全国通用代金卷1张全国通用代金卷1张",
-				"price": 1,
-				"priceold": 111,
-				"imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
-			}, {
-				"dealId":1002,
-				"title": "食之密本期2",
-				"intro": "全国通用代金卷1张全国通用代金卷1张",
-				"price": 1,
-				"priceold": 111,
-				"imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
-			}, {
-				"dealId":1003,
-				"title": "食之密本期3",
-				"intro": "全国通用代金卷1张全国通用代金卷1张",
-				"price": 1,
-				"priceold": 111,
-				"imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
-			}]
-	}
-
+{
+    "initDealInfo": [{
+        "dealId": 1001,
+        "title": "食之密本期1",
+        "intro": "全国通用代金卷1张全国通用代金卷1张",
+        "price": 1,
+        "priceold": 111,
+        "imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
+    }, {
+        "dealId": 1002,
+        "title": "食之密本期2",
+        "intro": "全国通用代金卷1张全国通用代金卷1张",
+        "price": 1,
+        "priceold": 111,
+        "imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
+    }, {
+        "dealId": 1003,
+        "title": "食之密本期3",
+        "intro": "全国通用代金卷1张全国通用代金卷1张",
+        "price": 1,
+        "priceold": 111,
+        "imgUrl": "http://t2.s2.dpfile.com/pc/mc/df342031a58fd955a700f19c71bed82d(160c100)/thumb.jpg"
+    }]
+}
