@@ -45,17 +45,23 @@ skDirectives.directive('timer', function() {
                     count++;
                     if (count > 60) {
                         $http.get('../../mock/realtime.json').success(function(data) {
-                            $scope.coming_seconds = data.coming_seconds;
+                         $scope.coming_seconds = data.coming_seconds;
                         });
                         count = 0;
                     }
+                    if ($scope.coming_seconds == 0) {
+                        $scope.$parent.status = 1;
+                    }
+		    else{
+		    	$scope.$parent.status = 0;
+		    }
                     $scope.coming_seconds = $scope.coming_seconds - 1000;
 
                     $scope.hour = _div($scope.coming_seconds, hT);
                     $scope.minute = _div(($scope.coming_seconds - $scope.hour * hT), mT);
                     $scope.second = _div(($scope.coming_seconds - $scope.hour * hT - $scope.minute * mT), sT);
-		    $scope.$apply();
-		}, 1000);
+                    $scope.$apply();
+                }, 1000);
 
 
             /** 整除 **/

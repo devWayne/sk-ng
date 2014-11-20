@@ -25,10 +25,8 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
                     val.wannaJoins = $scope.joins[idx].wannaJoin;
                 });
             })**/
-            $scope.status = 0;
             $scope.statusWords = statusList[$scope.status];
         });
-
 
     }
 ]);
@@ -36,6 +34,7 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
 
 skControllers.controller('skDealCtrl', ['$scope', '$routeParams',
     function($scope, $routeParams) {
+	$scope.overlay_flag=0;
         $scope.phoneId = $routeParams.phoneId;
     }
 ]);

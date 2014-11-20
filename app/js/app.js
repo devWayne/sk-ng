@@ -5,7 +5,8 @@ var skApp = angular.module('skApp', [
   'ngRoute',
   'skDirs',
   'skFilters',
-  'skControllers'
+  'skControllers',
+  'skServices'
 ]);
 
 var underscore=angular.module('underscore',[]);
