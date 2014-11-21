@@ -32,9 +32,18 @@ skApp.config(['$routeProvider',
 
 skApp.run(function($rootScope,$http) {
     $rootScope.dealStatus=[];
-    $rootScope.dealStatus[1001]=1;
+    $rootScope.dealStatus[1001]=0;
     $http.get('../../mock/realtime.json').success(function(data) {
-              $rootScope.init_seconds = data.coming_seconds;
+            $rootScope.init_seconds = data.coming_seconds;
+    });
+    if( $rootScope.init_seconds>0){
+	    $rootScope.status=0;
+    }
+    else{
+	    $rootScope.status=1;
+    }
+     $http.get('../../mock/init.json').success(function(data) {
+            $rootScope.initDealInfo = data.initDealInfo;
     });
 
 })
