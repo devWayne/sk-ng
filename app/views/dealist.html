@@ -12,7 +12,7 @@
 	<span class="nav-tag"> <span ng-if="status == 0">即将开抢</span> <span ng-if="status == 1">抢购中</span></span>
 		<span class="nav-tag-border"></span>
 		<span class="nav-countdown" ng-hide="status">
-			距开抢<timer></timer>
+			距开抢<countdown></countdown>
 		</span>
 </div>	
 <div class="miaosha-deal-content" >
@@ -28,7 +28,7 @@
 			  <span class="twoprize del">￥{{deal.priceold}}</span>
 			  
 			  <span ng-if="status == 0"><dealist-wannajoin>{{deal.wannaJoins}}</dealist-wannajoin></span>
-			   <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
+			   <span ng-if="status == 1"><dealist-buy filterby="deal.dealId"></dealist-buy></span>
 
 		  	</div>
 		</div>

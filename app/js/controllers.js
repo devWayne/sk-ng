@@ -4,7 +4,7 @@ var skControllers = angular.module('skControllers', ['underscore']);
 
 skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
     function($scope, $http, _) {
-
+	 
         /** tiemr **/
         //$scope.timer=[];
 
@@ -28,10 +28,17 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '_',
     }
 ]);
 
-
 skControllers.controller('skDealCtrl', ['$scope', '$routeParams',
     function($scope, $routeParams) {
         $scope.overlay_flag = 0;
         $scope.phoneId = $routeParams.phoneId;
     }
 ]);
+
+skControllers.controller('skCtrl', function($scope) {
+
+});
+
+
+
+

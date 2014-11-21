@@ -2,6 +2,6 @@
 
 var skServices = angular.module('skServices',[]);
 
-skServices.factory('status',function(){
+skServices.factory('timer',function(){
   return status;
 })

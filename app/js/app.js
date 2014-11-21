@@ -29,3 +29,12 @@ skApp.config(['$routeProvider',
         redirectTo: '/dealist'
       });
   }]);
+
+skApp.run(function($rootScope,$http) {
+    $rootScope.dealStatus=[];
+    $rootScope.dealStatus[1001]=1;
+    $http.get('../../mock/realtime.json').success(function(data) {
+              $rootScope.init_seconds = data.coming_seconds;
+    });
+
+})
