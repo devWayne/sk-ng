@@ -65,6 +65,7 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
             mT = 60 * 1000,
             sT = 1000,
             count = 1;
+	$scope.$parent.status=$rootScope.status;
         $scope.coming_seconds = $rootScope.init_seconds;
         var timer = setInterval(
             function() {
@@ -75,14 +76,14 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
                     });
                     count = 0;
                 }
+		 $scope.coming_seconds = $scope.coming_seconds - 1000;
                 if ($scope.coming_seconds < 0 || $scope.coming_seconds == 0) {
                     $scope.$parent.status = 1;
                     clearInterval(timer);
                 } else {
                     $scope.$parent.status = 0;
                 }
-                $scope.coming_seconds = $scope.coming_seconds - 1000;
-
+               
                 $scope.hour = _div($scope.coming_seconds, hT);
                 $scope.minute = _div(($scope.coming_seconds - $scope.hour * hT), mT);
                 $scope.second = _div(($scope.coming_seconds - $scope.hour * hT - $scope.minute * mT), sT);
