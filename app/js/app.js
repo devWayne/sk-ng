@@ -1,16 +1,17 @@
  /* App Module */
 
  var skApp = angular.module('skApp', [
-     'underscore',
+     'lodash',
      'ngRoute',
      'skDirs',
      'skFilters',
      'skControllers',
-     'skServices'
+     'skServices',
+     'ngSanitize'
  ]);
 
- var underscore = angular.module('underscore', []);
- underscore.factory('_', function() {
+ var lodash = angular.module('lodash', []);
+ lodash.factory('_', function() {
      return window._;
  });
 
@@ -32,8 +33,9 @@
  ]);
 
  skApp.run(function($rootScope, $http) {
-     $rootScope.dealStatus = [];
-     $rootScope.dealStatus[1001] = 0;
+     $rootScope.dealStatus=[];
+     $rootScope.buy_status = [];
+    // $rootScope.current.dealroups[1001] = 0;
      $http.get('../../mock/realtime.json').success(function(data) {
          $rootScope.init_seconds = data.coming_seconds;
          if ($rootScope.init_seconds > 0) {
@@ -44,7 +46,7 @@
 
      });
      $http.get('../../mock/init.json').success(function(data) {
-         $rootScope.initDealInfo = data.initDealInfo;
+         $rootScope.dealgroups = data.current[0].dealgroups;
      });
 
  })

@@ -9,7 +9,7 @@
 
 
 <div class="nav nav-s">
-	<span class="nav-tag"> <span ng-if="status == 0">即将开抢</span> <span ng-if="status == 1">抢购中</span></span>
+	<span class="nav-tag"> <span ng-if="status == 0">即将开抢</span> <span ng-if="status == 1" style="color:rgb(255,102,51)">抢购中</span></span>
 		<span class="nav-tag-border"></span>
 		<span class="nav-countdown" ng-hide="status">
 			距开抢<countdown></countdown>
@@ -18,14 +18,14 @@
 <div class="miaosha-deal-content" >
 	  <ul >
             <li ng-repeat="deal in deals">
-	    <a href="#/deal/{{deal.dealId}}">
-	       	<img ng-src={{deal.imgUrl}} alt="">
+	    <a href="#/deal/{{deal.id}}">
+	       	<img ng-src={{deal.photo_url}} alt="">
 		<div class="miaosha-deal-text">
 			<p class="miaosha-deal-title">{{deal.title}}</p>
-			<p class="miaosha-deal-intro">{{deal.intro}}</p>
+			<p class="miaosha-deal-intro">{{deal.description}}</p>
 			<div class="miaosha-deal-price">
-		          <span class="oneprize nowprize">￥{{deal.price}}</span>
-			  <span class="twoprize del">￥{{deal.priceold}}</span>
+		          <span class="oneprize nowprize">￥{{deal.current_price}}</span>
+			  <span class="twoprize del">￥{{deal.list_price}}</span>
 			  
 			  <span ng-if="status == 0"><dealist-wannajoin>{{deal.wannaJoins}}</dealist-wannajoin></span>
 			   <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
@@ -45,14 +45,14 @@
 <div class="miaosha-deal-content" >
 	  <ul >
             <li ng-repeat="deal in deals">
-	    <a href="#/deal/{{deal.dealId}}">
-	       	<img ng-src={{deal.imgUrl}} alt="">
+	    <a href="#/deal/{{deal.id}}">
+	       	<img ng-src={{deal.photo_url}} alt="">
 		<div class="miaosha-deal-text">
 			<p class="miaosha-deal-title">{{deal.title}}</p>
-			<p class="miaosha-deal-intro">{{deal.intro}}</p>
+			<p class="miaosha-deal-intro">{{deal.description}}</p>
 			<div class="miaosha-deal-price">
-		          <span class="oneprize nowprize">￥{{deal.price}}</span>
-			  <span class="twoprize del">￥{{deal.priceold}}</span>
+		          <span class="oneprize nowprize">￥{{deal.current_price}}</span>
+			  <span class="twoprize del">￥{{deal.list_price}}</span>
 			  <dealist-wannajoin>{{deal.wannaJoins}}</dealist-wannajoin>
 		  	</div>
 		</div>

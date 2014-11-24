@@ -1,6 +1,6 @@
 <div ng-controller="skDealCtrl">
     <div ng-controller="timer"></div>
-    <div class="remind-pop" ng-show="remind-pop">
+    <div class="remind-pop" ng-show="remind_flag">
         <h3>请输入手机号码</h3>
 
         <p>提醒短信会在开抢前10分钟发出</p>
@@ -10,11 +10,11 @@
         </p>
 
         <div class="buttons">
-            <a href="javascript:void(0);" class="J-cancel-remind-btn">取消</a>
+            <a href="javascript:void(0);" ng-click="remind()" class="J-cancel-remind-btn">取消</a>
             <a href="javascript:void(0);" class="J-submit-remind-btn">发送</a>
         </div>
     </div>
-    <div class="storage-tips" ng-show="storage-tips">
+    <div class="storage-tips" ng-show="storage_flag">
         <i class="alert"></i>
         <p>该商品已被抢光，如10分钟后有人未付款，您将有购买机会。</p>
         <a href="#" class="close"></a>
@@ -35,110 +35,23 @@
 					￥<span>1</span>
                 </span>
                 <span class="deal-old-price">&#165;353</span>
-		<span ng-if="status == 0"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
-		<span a ng-if="status == 1"><deal-buy></deal-buy><span>
+                <span ng-if="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                <span a ng-if="status == 1"><deal-buy></deal-buy><span>
 
             </div>
         </div>
     </div>
-    <div class="deal-accordion J-deal-accordion title-collapse">
+   <div class="deal-accordion J-deal-accordion title-collapse">
         <!-- 添加title-collapse为折叠状态  去掉即为展开 -->
-        <div>
-            <div class="dealgroup-detail-info">
-                <div class="detail-title">团购详情</div>
-                <div class="detail-content">
-                    <div class="detail-tit"></div>
-                    <table width="100%" cellpadding="0" cellspacing="0" class="detail-table">
-                        <thead>
-                            <tr>
-                                <th width="50%">名称</th>
-                                <th width="25%">数量</th>
-                                <th width="25%">单价</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>资深设计师洗剪吹</td>
-                                <td class="tc">1次</td>
-                                <td class="tc">70元</td>
-                            </tr>
-                            <tr>
-                                <td>德国施华蔻滋养护理</td>
-                                <td class="tc">1次</td>
-                                <td class="tc">680元</td>
-                            </tr>
-                            <tr class="total">
-                                <td></td>
-                                <td class="tc">总价值
-                                    <br><strong>团购价</strong>
-                                </td>
-                                <td class="tc">750元
-                                    <br><strong>1元</strong>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-            <div class="dealgroup-buy-info">
-                <div class="detail-title">购买须知</div>
-                <div class="detail-content">
-                    <div class="detail-box">
-                        <div class="purchase-notes">
-                            <dl>
-                                <dt>有效期</dt>
-                                <dd>
-                                    <p class="listitem">2014-11-20至2015-02-28</p>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>预约信息</dt>
-                                <dd>
-                                    <p class="listitem">请您提前1天预约</p>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>适用人数</dt>
-                                <dd>
-                                    <p class="listitem">每张团购券最多1人使用</p>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>适用人群</dt>
-                                <dd>
-                                    <p class="listitem">男女通用</p>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>规则提醒</dt>
-                                <dd>
-                                    <p class="listitem">需您当日一次性体验完毕所有项目</p>
-                                    <p class="listitem">不再与店内其他优惠同享</p>
-                                </dd>
-                            </dl>
-                            <dl>
-                                <dt>温馨提示</dt>
-                                <dd>
-                                    <p class="listitem">如需团购券发票，请您在消费时向商户咨询</p>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="interval"></div>
+	    <div ng-bind-html="view.details"></div>
+	    <div ng-bind-html="view.tips"></div>
     </div>
 
-    <!---->
     <div class="deal-accordion title-collapse">
         <a class="deal-accordion-title" href="dianping://shopidlist?ids=15862016" track="qianginfo6_shop_8274033" mmurl="http://mm.dianping.com/weixin/#shoplist~8274033" murl="http://m.dianping.com/tuan/shoplist/8274033">
             <span>查看全部1家适用商户</span>
-
-            <span class="arrow"></span>
-        </a>
-    </div>
-    <div class="dialogue-overlay" ng-show="overlay_flag"></div>
-</div>
+                <span class="arrow"></span>
+                </a>
+            </div>
+            <div class="dialogue-overlay" ng-show="overlay_flag"></div>
+        </div>

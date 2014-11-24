@@ -1,0 +1,13 @@
+{ 
+  "id": 10003, 
+  "title": "西树泡芙", 
+  "details": "<div class=\"detail-box\"><h3 class=\"tit\">团购详情</h3><div class=\"detail-tit\"></div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" class=\"detail-table\"> <thead> <tr> <th width=\"50%\">内容</th> <th width=\"25%\">规格</th> <th width=\"25%\">价值</th> </tr> </thead> <tbody> <tr><td>增值套餐卡</td><td class=\"tc\">1张/500元（6张）</td><td class=\"tc\">3000元</td>", 
+  "begin_time": "2014-11-19 11:11:00", 
+  "end_time": "2014-11-19 23:59:59", 
+  "status": "2", 
+  "photo_url": "http://i3.s1.dpfile.com/pc/mc/97520b0350f0ecc5a77d5528a0a77c9e(450c280)/thumb.jpg", 
+  "current_price": 1, 
+  "description": "仅售29.9元，价值48元泡芙四个装组合！无需预约，奶香醇浓，清新爽滑，口感细腻，畅享幸福好滋味", 
+  "tips": "<div class=\"detail-box\"><h3 class=\"tit\">购买须知</h3><div class=\"detail-box\"><div class=\"purchase-notes\"><dl><dt>使用时间</dt><dd><p class=\"listitem\">2014-07-16至2015-01-31</p></dd></dl><dl><dt>预约信息</dt><dd>", 
+  "list_price": 60 
+}

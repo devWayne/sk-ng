@@ -35,14 +35,16 @@ skDirectives.directive('dealBuy', function() {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: '<a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-z">{{words}}</a>',
+        template: '<a href="javascript:void(0)" class="deal-buy J-deal-buy-btn {{class}}">{{words}}</a>',
         controller: function($scope, $element, $attrs, $transclude, $rootScope) {
             if ($rootScope.dealStatus[$scope.$parent.dealId] == 0) {
                 $scope.words = "抢光了";
-                $scope.class = "wantbuy";
+                $scope.class = "deal-buy-o";
 
             } else {
-                $scope.words = "抢"
+                $scope.words = "抢";
+                $scope.class = "deal-buy-z";
+
             }
         }
     }
@@ -65,7 +67,7 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
             mT = 60 * 1000,
             sT = 1000,
             count = 1;
-	$scope.$parent.status=$rootScope.status;
+        $scope.$parent.status = $rootScope.status;
         $scope.coming_seconds = $rootScope.init_seconds;
         var timer = setInterval(
             function() {
@@ -76,14 +78,14 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
                     });
                     count = 0;
                 }
-		 $scope.coming_seconds = $scope.coming_seconds - 1000;
+                $scope.coming_seconds = $scope.coming_seconds - 1000;
                 if ($scope.coming_seconds < 0 || $scope.coming_seconds == 0) {
                     $scope.$parent.status = 1;
                     clearInterval(timer);
                 } else {
                     $scope.$parent.status = 0;
                 }
-               
+
                 $scope.hour = _div($scope.coming_seconds, hT);
                 $scope.minute = _div(($scope.coming_seconds - $scope.hour * hT), mT);
                 $scope.second = _div(($scope.coming_seconds - $scope.hour * hT - $scope.minute * mT), sT);
