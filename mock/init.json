@@ -1,56 +1,59 @@
-{ 
-  "status": "OK", 
-  "timer": { 
-             "sale_status": 1, 
-    "current_time": "2014-11-19 10:11:00", 
-    "coming_seconds": 130000000 
-  }, 
-  "next": { 
-    "time": "2014-11-20 11:11:00", 
-    "dealgroups": [ 
-      { 
-        "id": 10000, 
-        "title": "静安面包房", 
-        "status": 1, 
-        "photo_url": "http://i3.s1.dpfile.com/pc/mc/97520b0350f0ecc5a77d5528a0a77c9e(450c280)/thumb.jpg", 
-        "current_price": 1, 
-        "description": "仅售19.8元，价值28元日式轻芝士蛋糕1个，46店通用", 
-        "list_price": 100 
-      },
-      { 
-        "id": 10001, 
-        "title": "西树泡芙", 
-        "status": 2, 
-        "photo_url": "http://i3.s1.dpfile.com/pc/mc/97520b0350f0ecc5a77d5528a0a77c9e(450c280)/thumb.jpg", 
-        "current_price": 1, 
-        "description": "仅售29.9元，价值48元泡芙四个装组合！无需预约，奶香醇浓，清新爽滑，口感细腻，畅享幸福好滋味", 
-        "list_price": 60 
-      } 
-    ] 
-  }, 
-  "current": [ 
-    { 
-      "time": "2014-11-19 11:11:00", 
-      "dealgroups": [ 
-        { 
-          "id": 10000, 
-          "title": "静安面包房", 
-          "status": 1, 
-          "photo_url": "http://i3.s1.dpfile.com/pc/mc/97520b0350f0ecc5a77d5528a0a77c9e(450c280)/thumb.jpg", 
-          "current_price": 1, 
-          "description": "仅售19.8元，价值28元日式轻芝士蛋糕1个，46店通用", 
-          "list_price": 100 
-        }, 
-        { 
-          "id": 10001, 
-          "title": "西树泡芙", 
-          "status": 2, 
-          "photo_url": "http://i3.s1.dpfile.com/pc/mc/97520b0350f0ecc5a77d5528a0a77c9e(450c280)/thumb.jpg", 
-          "current_price": 1, 
-          "description": "仅售29.9元，价值48元泡芙四个装组合！无需预约，奶香醇浓，清新爽滑，口感细腻，畅享幸福好滋味", 
-          "list_price": 60 
-        } 
-      ] 
-    } 
-  ] 
+{
+    "code": 200,
+    "result": {
+        "timer": {
+            "current_time": "2014-11-27 11:47:34",
+            "coming_seconds": 0,
+            "status": 2
+        },
+        "next": {
+            "time": "2014-11-28 15:00:00",
+            "dealgroups": [{
+                "thumb_photo_url": "http:\/\/i3.s1.51ping.com\/pc\/mc\/076e3caed758a1c18c91a0e9cae3368f(160x100)\/thumb.jpg",
+                "id": 10001008,
+                "title": "Σ( ° △ °|||)︴",
+                "wanna_join": 0,
+                "status": 0,
+                "current_price": 1.0,
+                "description": "仅售1元，价值10.1元仿盛大！",
+                "banner_photo_url": "http:\/\/i3.s1.51ping.com\/pc\/mc\/076e3caed758a1c18c91a0e9cae3368f(450x280)\/thumb.jpg",
+                "list_price": 10.1
+            }]
+        },
+        "current": [{
+            "time": "2014-11-27 11:11:00",
+            "dealgroups": [{
+                "thumb_photo_url": "http:\/\/i3.s1.51ping.com\/pc\/mc\/076e3caed758a1c18c91a0e9cae3368f(160x100)\/thumb.jpg",
+                "id": 10000975,
+                "title": "阿斯顿饭刻录机",
+                "wanna_join": 0,
+                "status": 1,
+                "current_price": 1.0,
+                "description": "仅售1元，价值22元大叔！和是大法官！",
+                "banner_photo_url": "http:\/\/i3.s1.51ping.com\/pc\/mc\/076e3caed758a1c18c91a0e9cae3368f(450x280)\/thumb.jpg",
+                "list_price": 22.0
+            }, {
+                "thumb_photo_url": "http:\/\/si1.s1.51ping.com\/tuan\/20130307\/159950_130071272490000000_1.jpg",
+                "id": 133081,
+                "title": "ipad 4\/ipad mini五合一读卡器",
+                "wanna_join": 0,
+                "status": 1,
+                "current_price": 1.0,
+                "description": "仅售39.9元，市场价值188元1个，免费配送！即插即用，实用方便！精彩生活，轻松呈现！",
+                "banner_photo_url": "http:\/\/si1.s1.51ping.com\/tuan\/20130307\/159950_130071272490000000.jpg",
+                "list_price": 188.0
+            }, {
+                "thumb_photo_url": "http:\/\/i2.s1.51ping.com\/pc\/mc\/fafa5efeaf3cbe3b23b2748d13e629a1(160x100)\/thumb.jpg",
+                "id": 10000793,
+                "title": "阿斯顿",
+                "wanna_join": 0,
+                "status": 1,
+                "current_price": 1.0,
+                "description": "仅售33元，价值35元啊，节假日通用！",
+                "banner_photo_url": "http:\/\/i2.s1.51ping.com\/pc\/mc\/fafa5efeaf3cbe3b23b2748d13e629a1(450x280)\/thumb.jpg",
+                "list_price": 35.0
+            }]
+        }],
+        "successful": 1
+    }
 }

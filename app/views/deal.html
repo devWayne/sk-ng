@@ -1,4 +1,15 @@
-<div ng-controller="skDealCtrl">
+<div ng-controller="skDealCtrl" style="position:absolute">
+	
+   <!-- <div class="input-num" ng-show="checkcode_flag">
+        <div class="line"><span class="input-num-btn">1</span><span  class="input-num-btn">2</span><span  class="input-num-btn">3</span>
+        </div>
+        <div class="line"><span  class="input-num-btn">4</span><span  class="input-num-btn">5</span><span  class="input-num-btn">6</span>
+        </div>
+        <div class="line"><span  class="input-num-btn">7</span><span  class="input-num-btn">8</span><span  class="input-num-btn">9</span>
+        </div>
+	<div class="line"><span  class="input-num-btn"></span><span  class="input-num-btn">0</span><span  class="input-num-btn"></span>
+        </div>
+    </div>-->
     <div ng-controller="timer"></div>
     <div class="remind-pop" ng-show="remind_flag">
         <h3>请输入手机号码</h3>
@@ -11,7 +22,7 @@
 
         <div class="buttons">
             <a href="javascript:void(0);" ng-click="remind()" class="J-cancel-remind-btn">取消</a>
-            <a href="javascript:void(0);" class="J-submit-remind-btn">发送</a>
+            <a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a>
         </div>
     </div>
     <div class="storage-tips" ng-show="storage_flag">
@@ -43,7 +54,7 @@
     </div>
    <div class="deal-accordion J-deal-accordion title-collapse">
         <!-- 添加title-collapse为折叠状态  去掉即为展开 -->
-	    <div ng-bind-html="view.details"></div>
+	    <div ng-bind-html="view.detail"></div>
 	    <div ng-bind-html="view.tips"></div>
     </div>
 

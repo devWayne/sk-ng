@@ -17,9 +17,9 @@
 </div>	
 <div class="miaosha-deal-content" >
 	  <ul >
-            <li ng-repeat="deal in deals">
+            <li ng-repeat="deal in now_deals">
 	    <a href="#/deal/{{deal.id}}">
-	       	<img ng-src={{deal.photo_url}} alt="">
+	       	<img ng-src={{deal.thumb_photo_url}} alt="">
 		<div class="miaosha-deal-text">
 			<p class="miaosha-deal-title">{{deal.title}}</p>
 			<p class="miaosha-deal-intro">{{deal.description}}</p>
@@ -27,7 +27,7 @@
 		          <span class="oneprize nowprize">￥{{deal.current_price}}</span>
 			  <span class="twoprize del">￥{{deal.list_price}}</span>
 			  
-			  <span ng-if="status == 0"><dealist-wannajoin>{{deal.wannaJoins}}</dealist-wannajoin></span>
+			  <span ng-if="status == 0"><dealist-wannajoin>{{deal.wanna_join}}</dealist-wannajoin></span>
 			   <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
 
 		  	</div>
@@ -40,20 +40,20 @@
 <div style="border:6px solid rgb(240,240,240)"></div>
 <div class="nav nav-n">
         <span class="nav-tag">下期预告</span>
-        <span class="nav-countdown">11月04日11:11开抢</span>
+	<span class="nav-countdown">{{$root.nexttime}}开抢</span>
 </div>
 <div class="miaosha-deal-content" >
 	  <ul >
-            <li ng-repeat="deal in deals">
+            <li ng-repeat="deal in next_deals">
 	    <a href="#/deal/{{deal.id}}">
-	       	<img ng-src={{deal.photo_url}} alt="">
+	       	<img ng-src={{deal.thumb_photo_url}} alt="">
 		<div class="miaosha-deal-text">
 			<p class="miaosha-deal-title">{{deal.title}}</p>
 			<p class="miaosha-deal-intro">{{deal.description}}</p>
 			<div class="miaosha-deal-price">
 		          <span class="oneprize nowprize">￥{{deal.current_price}}</span>
 			  <span class="twoprize del">￥{{deal.list_price}}</span>
-			  <dealist-wannajoin>{{deal.wannaJoins}}</dealist-wannajoin>
+			  <dealist-wannajoin>{{deal.wanna_join}}</dealist-wannajoin>
 		  	</div>
 		</div>
 	    </a>
@@ -65,7 +65,7 @@
 <div>
         <h3 class='subtitle'>活动规则</h3>
         <ul class='endinfolist'>
-            <li>同一用户同一订单仅限购买1份；</li>
+            <li>同一用户同一订单仅限购买1份,且每次同一用户仅限消费1张；</li>
             <li>同一用户名、手机号、设备号与支付账号均视为同一用户；</li>
             <li>若出现恶意作弊购买等非正常方式参与活动的行为，主办方有权取消您所购买的团购；</li>
             <li>秒杀团单购买成功后，不支持退款，敬请理解。</li>
