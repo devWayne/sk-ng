@@ -25,7 +25,7 @@ skDirectives.directive('dealistBuy', function() {
 
             } else {
                 $scope.words = "抢"
-		$scope.class="dealist-buy"
+                $scope.class = "dealist-buy"
             }
         }
     }
@@ -38,7 +38,7 @@ skDirectives.directive('dealBuy', function() {
         transclude: true,
         template: '<a href="javascript:void(0)" ng-click="checkcode()" class="deal-buy J-deal-buy-btn {{class}}">{{words}}</a>',
         controller: function($scope, $element, $attrs, $transclude, $rootScope) {
-	            if ($rootScope.dealStatus[$scope.$parent.dealId] == 0) {
+            if ($rootScope.dealStatus[$scope.$parent.dealId] == 0) {
                 $scope.words = "抢光了";
                 $scope.class = "deal-buy-o";
 
@@ -78,11 +78,11 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
                 count++;
                 if (count > 60) {
                     $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
-                       	$scope.coming_seconds=data.result.timer.coming_seconds*1000;
+                        $scope.coming_seconds = data.result.timer.coming_seconds * 1000;
                     });
                     count = 0;
                 }
-               	$scope.coming_seconds=	$scope.coming_seconds - 1000;
+                $scope.coming_seconds = $scope.coming_seconds - 1000;
                 if ($scope.coming_seconds < 0 || $scope.coming_seconds == 0) {
                     $scope.$parent.status = 1;
                     $rootScope.status = 1;
@@ -116,3 +116,21 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
         }
     }
 ]);
+
+
+skDirectives.directive('toast', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        transclude: true,
+        template: '<div><p style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:100px;left:{{left}}px;top:{{top}}px;" ng-transclude></p></div>',
+        controller: function($scope, $element, $attrs, $transclude, $rootScope, $window) {
+            $scope.width = 300;
+            $scope.height = 100;
+            $scope.top = ($window.innerHeight - $scope.height) / 2;
+            $scope.left = ($window.innerWidth - $scope.width) / 2;
+            $scope.overlayHeight = $window.innerHeight;
+            $scope.overlayWidth = $window.innerWidth;
+        }
+    }
+});

@@ -39,16 +39,23 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         $scope.overlay_flag = 0;
         $scope.remind_flag = 0;
         $scope.storage_flag = 0;
+        $scope.words_flag = 0;
         $scope.view = {};
         $scope.remind = function() {
             $scope.remind_flag = !$scope.remind_flag;
             $scope.overlay_flag = !$scope.overlay_flag;
         };
         $scope.remindajax = function() {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id='+ $rootScope.cityid +'&dealgroup_id='+ $scope.dealId+'&callback=SDFFF').success(function(data) {
-		
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=SDFFF').success(function(data) {
+                //$scope.overlay_flag=1;
             });
-
+            $scope.words = '123';
+            $scope.words_flag = 1;
+            $scope.remind_flag = 0;
+            setTimeout(function() {
+                $scope.words_flag = 0;
+                $scope.overlay_flag = 0;
+            }, 3000);
         }
     }
 ]);
