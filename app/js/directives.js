@@ -36,22 +36,8 @@ skDirectives.directive('dealBuy', function() {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: '<a href="javascript:void(0)" ng-click="checkcode()" class="deal-buy J-deal-buy-btn {{class}}">{{words}}</a>',
-        controller: function($scope, $element, $attrs, $transclude, $rootScope) {
-            if ($rootScope.dealStatus[$scope.$parent.dealId] == 0) {
-                $scope.words = "抢光了";
-                $scope.class = "deal-buy-o";
-
-            } else {
-                $scope.words = "抢";
-                $scope.class = "deal-buy-z";
-                $scope.checkcode = function() {
-                    $scope.$parent.checkcode_flag = !$scope.$parent.checkcode_flag;
-                }
-
-
-            }
-        }
+        template: '<a href="javascript:void(0)" ng-click="checkcode()" class="deal-buy J-deal-buy-btn {{buy_class}}">{{buy_words}}</a>',
+        link: function($scope, $element, $attrs, $transclude, $rootScope) {}
     }
 });
 
@@ -71,36 +57,46 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
             mT = 60 * 1000,
             sT = 1000,
             count = 1;
-        $scope.$parent.status = $rootScope.status;
-        $scope.coming_seconds = $rootScope.init_seconds;
-        var timer = setInterval(
-            function() {
-                count++;
-                if (count > 60) {
-                    $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
-                        $scope.coming_seconds = data.result.timer.coming_seconds * 1000;
-                    });
-                    count = 0;
-                }
-                $scope.coming_seconds = $scope.coming_seconds - 1000;
-                if ($scope.coming_seconds < 0 || $scope.coming_seconds == 0) {
-                    $scope.$parent.status = 1;
-                    $rootScope.status = 1;
-                    $rootScope.init_seconds = $scope.coming_seconds;
-                    clearInterval(timer);
-                } else {
-                    $scope.$parent.status = 0;
-                    $rootScope.status = 0;
-                    $rootScope.init_seconds = $scope.coming_seconds;
 
-                }
+        $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/timer?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+            $scope.coming_seconds = data.result.coming_seconds * 1000;
+            if ($scope.coming_seconds > 0) {
+                $rootScope.status = 0;
+                $scope.$parent.status = $rootScope.status;
 
-                $scope.hour = _div($scope.coming_seconds, hT);
-                $scope.minute = _div(($scope.coming_seconds - $scope.hour * hT), mT);
-                $scope.second = _div(($scope.coming_seconds - $scope.hour * hT - $scope.minute * mT), sT);
-                $scope.$apply();
-            }, 1000);
+            } else {
+                $rootScope.status = 1;
+                $scope.$parent.status = $rootScope.status;
+            }
+        });
 
+        if ($rootScope.status == 0) {
+
+            var timer = setInterval(
+                function() {
+                    count++;
+                    if (count > 60) {
+                        count = 0;
+                    }
+                    $scope.coming_seconds = $scope.coming_seconds - 1000;
+                    if ($scope.coming_seconds < 0 || $scope.coming_seconds == 0) {
+                        $scope.$parent.status = 1;
+                        $rootScope.status = 1;
+                        $rootScope.init_seconds = $scope.coming_seconds;
+                        clearInterval(timer);
+                    } else {
+                        $scope.$parent.status = 0;
+                        $rootScope.status = 0;
+                        $rootScope.init_seconds = $scope.coming_seconds;
+
+                    }
+
+                    $scope.hour = _div($scope.coming_seconds, hT);
+                    $scope.minute = _div(($scope.coming_seconds - $scope.hour * hT), mT);
+                    $scope.second = _div(($scope.coming_seconds - $scope.hour * hT - $scope.minute * mT), sT);
+                    $scope.$apply();
+                }, 1000);
+        }
 
         /** 整除 **/
         function _div(exp1, exp2) {
@@ -117,13 +113,13 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
     }
 ]);
 
-
+/* toast */
 skDirectives.directive('toast', function() {
     return {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: '<div><p style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:100px;left:{{left}}px;top:{{top}}px;" ng-transclude></p></div>',
+        template: '<p style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:100px;left:{{left}}px;top:{{top}}px;" ng-transclude ng-show="words_flag"></p>',
         controller: function($scope, $element, $attrs, $transclude, $rootScope, $window) {
             $scope.width = 300;
             $scope.height = 100;
@@ -133,4 +129,18 @@ skDirectives.directive('toast', function() {
             $scope.overlayWidth = $window.innerWidth;
         }
     }
+});
+
+/* scroll popup */
+skDirectives.directive("scroll", function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+             if (this.pageYOffset >= 300) {
+                 scope.scrollBlk = true;
+             } else {
+                 scope.scrollBlk = false;
+             }
+            scope.$apply();
+        });
+    };
 });

@@ -1,6 +1,6 @@
-<div ng-controller="skDealCtrl" style="position:absolute">
-	
-   <!-- <div class="input-num" ng-show="checkcode_flag">
+<div ng-controller="skDealCtrl" style="position:absolute" scroll>
+
+    <!-- <div class="input-num" ng-show="checkcode_flag">
         <div class="line"><span class="input-num-btn">1</span><span  class="input-num-btn">2</span><span  class="input-num-btn">3</span>
         </div>
         <div class="line"><span  class="input-num-btn">4</span><span  class="input-num-btn">5</span><span  class="input-num-btn">6</span>
@@ -10,7 +10,19 @@
 	<div class="line"><span  class="input-num-btn"></span><span  class="input-num-btn">0</span><span  class="input-num-btn"></span>
         </div>
     </div>-->
-   <toast ng-show="words_flag">{{words}}</toast>
+    <div class="check-box" ng-show="checkcode_flag">
+        <div class="title">一元秒杀验证</div>
+        <div class="checkcode">12345</div>
+        <div class="tips">输入验证码</div>
+        <div>
+            <input class="input-blk" />
+        </div>
+        <div class="btn-blk">
+            <span class="cancel-btn" ng-click="checkcode()">取消</span>
+            <span class="confirm-btn" ng-click="buyajax()">抢</span>
+        </div>
+    </div>
+    <toast ng-show="words_flag">{{words}}</toast>
     <div ng-controller="timer"></div>
     <div class="remind-pop" ng-show="remind_flag">
         <h3>请输入手机号码</h3>
@@ -18,7 +30,7 @@
         <p>提醒短信会在开抢前10分钟发出</p>
 
         <p>
-            <input type="tel" maxlength="13" class="J-mobileno-remind-input">
+	<input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phonenum">
         </p>
 
         <div class="buttons">
@@ -32,21 +44,21 @@
         <a href="#" class="close"></a>
     </div>
     <div class="deal-img">
-        <img src="http://t3.s2.dpfile.com/pc/mc/966cb275a40edf64fd50737f18771243(640x1024)/thumb.jpg" />
+        <img src="{{banner_photo_url}}" />
     </div>
     <div class="deal-text">
         <div class="deal-title-box">
-            <span class="deal-title">Pasta inn</span>
+            <span class="deal-title">{{title}}</span>
             <span class="deal-title-border"></span>
         </div>
         <div class="deal-text-box">
-            <p class="deal-intro">仅售1元，价值353元双人西餐套餐！</p>
+            <p class="deal-intro">{{description}}</p>
 
             <div class="deal-price-box">
                 <span class="deal-price">
-					￥<span>1</span>
+			￥<span>{{current_price}}</span>
                 </span>
-                <span class="deal-old-price">&#165;353</span>
+                <span class="deal-old-price">&#165;{{list_price}}</span>
                 <span ng-if="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
                 <span a ng-if="status == 1"><deal-buy></deal-buy><span>
 
@@ -55,8 +67,8 @@
     </div>
    <div class="deal-accordion J-deal-accordion title-collapse">
         <!-- 添加title-collapse为折叠状态  去掉即为展开 -->
-	    <div ng-bind-html="view.detail"></div>
-	    <div ng-bind-html="view.tips"></div>
+	    <div ng-bind-html="view.detail" class="con"></div>
+	    <div ng-bind-html="view.tips" class="con"></div>
     </div>
 
     <div class="deal-accordion title-collapse">
@@ -65,5 +77,33 @@
                 <span class="arrow"></span>
                 </a>
             </div>
+            <div class="other-groupon">
+                <div class="other-groupon-title">本店其他团购</div>
+                <div class="other-groupon-list">
+                    <ul>
+                        <li ng-repeat="sibling in siblings">
+			<a href="dianping://tuandeal?id={{id}}">
+				    <img src="{{thumb_photo_url}}" alt="description">
+
+                                <div class="other-groupon-text">
+					<p>{{description}}</p>
+					<span class="price">¥{{current_price}}</span>
+					<span class="old-price">¥{{list_price}}</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="dialogue-overlay" ng-show="overlay_flag"></div>
+            <div ng-show="scrollBlk" style="display: block; width:100%; box-sizing:border-box; position: fixed; z-index: 5000; left: 0px; top: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(216, 216, 216); padding: 10px 15px; background-color: rgb(255, 255, 255);">
+                <div class="deal-price-box deal-price-box-float">
+                    <span class="deal-price">
+					￥<span>{{current_price}}</span>
+                    </span>
+                    <span class="deal-old-price">¥{{list_price}}</span>
+                    <span ng-if="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                    <span a ng-if="status == 1"><deal-buy></deal-buy><span>
+
+        </div></div>
         </div>
