@@ -137,7 +137,7 @@ skDirectives.directive('toast', function() {
 
 skDirectives.directive('remindPopup', function() {
     return {
-        template: '<div class="remind-pop"  style="left:{{left}}px;"><h3>请输入手机号码</h3><p>提醒短信会在开抢前10分钟发出</p><p><input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phone_num"></p><div class="buttons"><a href="javascript:void(0);" ng-click="remind()" class="J-cancel-remind-btn">取消</a><a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a></div></div>',
+	    template: '<div class="remind-pop"  style="left:{{left}}px;position:fixed"><h3>请输入手机号码</h3><p>提醒短信会在开抢前10分钟发出</p><p><input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phone_num"></p><div class="buttons"><a href="javascript:void(0);" ng-click="remind()" class="J-cancel-remind-btn">取消</a><a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a></div></div>',
 	controller:'win_position',
 	restrict: 'E',
         replace: true,

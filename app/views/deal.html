@@ -19,7 +19,7 @@
         </div>
         <div class="btn-blk">
             <span class="cancel-btn" ng-click="checkcode_close()">取消</span>
-            <span class="confirm-btn" ng-click="buyajax()">抢</span>
+            <span class="confirm-btn" ng-click="codecheck()">抢</span>
         </div>
     </div>
     <remind-popup ng-show="remind_flag"></remind-popup>
@@ -49,7 +49,6 @@
 		
                 <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
 		 <span ng-show="status == 1"><deal-buy></deal-buy></span>
-
                 <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
                	            </div>
         </div>

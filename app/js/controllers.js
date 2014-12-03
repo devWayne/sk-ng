@@ -76,29 +76,33 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
 
         $scope.$watch('checkcode_num', function() {
             if ($scope.checkcode_num.toString().length == 4) {
-                $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id='+ $scope.dealId +'&captcha='+$scope.checkcode_num+'&callback=JSON_CALLBACK').success(function(data) {
-                    if (data.code == 200 && data.result.verified == 1) {
-			$scope.checkcode_close();
-			$scope.status=2;
-			return;
-                    }
-                    if (data.code == 200 && data.result.verified == 0) {
-                        $scope.toast.title = '提示';
-                        $scope.toast.words = '请输入正确的验证码';
-			$scope.overlay_flag=1;
-                        $scope.words_flag = 1;
-                        setTimeout(function() {
-                            $scope.words_flag = 0;
-			    $scope.overlay_flag=0;
-                            $scope.$apply();
-			    $scope.checkcode_open();
-                        }, 3000);
-                        return;
-
-                    }
-                })
-            }
+	    	$scope.codecheck();
+	    }
         });
+
+        $scope.codecheck = function() {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&callback=JSON_CALLBACK').success(function(data) {
+                if (data.code == 200 && data.result.verified == 1) {
+                    $scope.checkcode_close();
+                    $scope.status = 2;
+                    return;
+                }
+                if (data.code == 200 && data.result.verified == 0) {
+                    $scope.toast.title = '提示';
+                    $scope.toast.words = '请输入正确的验证码';
+                    $scope.overlay_flag = 1;
+                    $scope.words_flag = 1;
+                    setTimeout(function() {
+                        $scope.words_flag = 0;
+                        $scope.overlay_flag = 0;
+                        $scope.$apply();
+                        $scope.checkcode_open();
+                    }, 3000);
+                    return;
+
+                }
+            })
+        }
 
         $scope.overlay_flag = 0;
         $scope.remind_flag = 0;
@@ -109,7 +113,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
             $scope.overlay_flag = !$scope.overlay_flag;
         };
         $scope.checkcode_open = function() {
-	    $scope.checkcode_num ="";
+            $scope.checkcode_num = "";
             $scope.checkcode_flag = 1;
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
                     if (data.code == 203) {
