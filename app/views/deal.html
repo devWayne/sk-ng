@@ -1,6 +1,6 @@
 <div ng-controller="skDealCtrl" style="position:absolute" scroll>
 
-   <!--<div class="input-num" ng-show="checkcode_flag">
+    <!--<div class="input-num" ng-show="checkcode_flag">
         <div class="line"><span class="input-num-btn">1</span><span  class="input-num-btn">2</span><span  class="input-num-btn">3</span>
         </div>
         <div class="line"><span  class="input-num-btn">4</span><span  class="input-num-btn">5</span><span  class="input-num-btn">6</span>
@@ -12,32 +12,19 @@
     </div> -->
     <div class="check-box" ng-show="checkcode_flag">
         <div class="title">一元秒杀验证</div>
-        <div class="checkcode">12345</div>
+        <div class="checkcode">{{checkcode_show}}</div>
         <div class="tips">输入验证码</div>
         <div>
-            <input class="input-blk" name="checkcode_num" ng-model="checkcode_num"/>
+            <input class="input-blk" name="checkcode_num" ng-model="checkcode_num" />
         </div>
         <div class="btn-blk">
-            <span class="cancel-btn" ng-click="checkcode()">取消</span>
+            <span class="cancel-btn" ng-click="checkcode_close()">取消</span>
             <span class="confirm-btn" ng-click="buyajax()">抢</span>
         </div>
     </div>
-    <toast ng-show="words_flag">{{words}}</toast>
+    <remind-popup ng-show="remind_flag"></remind-popup>
+    <toast ng-show="words_flag"></toast>
     <div ng-controller="timer"></div>
-    <div class="remind-pop" ng-show="remind_flag">
-        <h3>请输入手机号码</h3>
-
-        <p>提醒短信会在开抢前10分钟发出</p>
-
-        <p>
-	<input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phone_num">
-        </p>
-
-        <div class="buttons">
-            <a href="javascript:void(0);" ng-click="remind()" class="J-cancel-remind-btn">取消</a>
-            <a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a>
-        </div>
-    </div>
     <div class="storage-tips" ng-show="storage_flag">
         <i class="alert"></i>
         <p>该商品已被抢光，如10分钟后有人未付款，您将有购买机会。</p>
@@ -59,10 +46,12 @@
 			￥<span>{{deal.current_price}}</span>
                 </span>
                 <span class="deal-old-price">&#165;{{deal.list_price}}</span>
-                <span ng-if="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
-                <span a ng-if="status == 1"><deal-buy></deal-buy><span>
+		
+                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+		 <span ng-show="status == 1"><deal-buy></deal-buy></span>
 
-            </div>
+                <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
+               	            </div>
         </div>
     </div>
    <div class="deal-accordion J-deal-accordion title-collapse">
@@ -82,13 +71,13 @@
                 <div class="other-groupon-list">
                     <ul>
                         <li ng-repeat="sibling in siblings">
-			<a href="dianping://tuandeal?id={{id}}">
-				    <img src="{{thumb_photo_url}}" alt="description">
+                            <a href="dianping://tuandeal?id={{id}}">
+                                <img src="{{thumb_photo_url}}" alt="description">
 
                                 <div class="other-groupon-text">
-					<p>{{description}}</p>
-					<span class="price">¥{{current_price}}</span>
-					<span class="old-price">¥{{list_price}}</span>
+                                    <p>{{description}}</p>
+                                    <span class="price">¥{{current_price}}</span>
+                                    <span class="old-price">¥{{list_price}}</span>
                                 </div>
                             </a>
                         </li>
@@ -102,8 +91,10 @@
 					￥<span>{{deal.current_price}}</span>
                     </span>
                     <span class="deal-old-price">¥{{deal.list_price}}</span>
-                    <span ng-if="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
-                    <span a ng-if="status == 1"><deal-buy></deal-buy><span>
+                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+		      <span ng-show="status == 1"><deal-buy></deal-buy></span>
+		    <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
 
-        </div></div>
+                  
+		           </div></div>
         </div>

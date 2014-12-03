@@ -38,7 +38,7 @@ gulp.task('concat:js', function() {
 
 gulp.task('compile:less', function() {
 
-    var banner = '/*! template ' */\n\n';
+    var banner = '/*! template */\n\n';
 
     return gulp.src('app/less/*.less')
         .pipe(less())

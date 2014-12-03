@@ -33,7 +33,7 @@
  ]);
 
  skApp.run(function($rootScope, $http, $location, $cookies) {
-	  $rootScope.dealInfo = [];
+	 $rootScope.dealInfo = [];
          $rootScope.dealStatus = [];
          $rootScope.buy_status = [];
 
@@ -41,4 +41,4 @@
      $rootScope.cityid = ($location.search()).cityid;
      $rootScope.token = ($location.search()).token;
      if ($rootScope.token) $cookies.token = $rootScope.token;
- })
+ });
