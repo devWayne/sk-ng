@@ -29,13 +29,14 @@
          otherwise({
              redirectTo: '/dealist'
          });
-     }
+      }
  ]);
 
  skApp.run(function($rootScope, $http, $location, $cookies) {
-     $rootScope.dealInfo =[];
-     $rootScope.dealStatus = [];
-     $rootScope.buy_status = [];
+	  $rootScope.dealInfo = [];
+         $rootScope.dealStatus = [];
+         $rootScope.buy_status = [];
+
      // $rootScope.current.dealroups[1001] = 0;
      $rootScope.cityid = ($location.search()).cityid;
      $rootScope.token = ($location.search()).token;

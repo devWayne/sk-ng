@@ -38,12 +38,12 @@ gulp.task('concat:js', function() {
 
 gulp.task('compile:less', function() {
 
-    var banner = '/*! template v' + pkg.version + ' */\n\n';
+    var banner = '/*! template ' */\n\n';
 
-    return gulp.src(dirs.src + '/less/*.less')
+    return gulp.src('app/less/*.less')
         .pipe(less())
         .pipe(plugins.header(banner))
-        .pipe(gulp.dest(dirs.src + '/css'));
+        .pipe(gulp.dest('dist/css'));
 
 });
 
@@ -65,7 +65,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch([dirs.src + '/less/*'], ['compile:less']);
+    gulp.watch(['app/less/*'], ['compile:less']);
 });
 
 
@@ -74,8 +74,7 @@ gulp.task('watch', function() {
 // -----------------------------------------------------------------------------
 gulp.task('clean', function(done) {
     require('del')([
-        dirs.archive,
-        dirs.dist
+        'dist/js/main.js',
     ], done);
 });
 
@@ -85,7 +84,7 @@ gulp.task('copy', [
 
 gulp.task('compile', [
     'compile:less',
-    'concat-debug:js',
+    'concat-angular:js',
     'concat:js'
 ]);
 
@@ -95,14 +94,10 @@ gulp.task('build', function(done) {
         ['clean'],
         'compile:less',
         'concat:js',
-        'concat-debug:js',
+        'concat-angular:js',
         'copy',
         done);
 });
-gulp.task('watch', function() {
-    gulp.watch('javascript/**/*', ['build']);
-});
-
 
 
 gulp.task('default', ['build']);
