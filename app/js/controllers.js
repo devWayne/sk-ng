@@ -2,10 +2,10 @@
 
 var skControllers = angular.module('skControllers', ['lodash']);
 
-skControllers.controller('skDealistCtrl', ['$scope', '$http', '_', '$rootScope',
-    function($scope, $http, _, $rootScope) {
+skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
+    function($scope, $http, $rootScope) {
         /** share popup **/
-        console.log(_);
+
         $scope.share_visable = false;
         $scope.share = function() {
             $scope.share_visable = !$scope.share_visable;
@@ -76,18 +76,19 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
 
         $scope.$watch('checkcode_num', function() {
             if ($scope.checkcode_num.toString().length == 4) {
-	    	$scope.codecheck();
-	    }
+                codecheck();
+            }
         });
 
-        $scope.codecheck = function() {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&callback=JSON_CALLBACK').success(function(data) {
-                if (data.code == 200 && data.result.verified == 1) {
+        var codecheck = function() {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&dpid=' + $rootScope.dpid + '&version=' + $rootScope.version + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+                if (data.code == 205 && data.result.advance_order_id) {
                     $scope.checkcode_close();
                     $scope.status = 2;
-                    return;
+                    poll(data.result.advance_order_id);
+
                 }
-                if (data.code == 200 && data.result.verified == 0) {
+                if (data.code == 201) {
                     $scope.toast.title = '提示';
                     $scope.toast.words = '请输入正确的验证码';
                     $scope.overlay_flag = 1;
@@ -100,9 +101,56 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                     }, 3000);
                     return;
 
+                } else {
+                    $scope.toast.title = '提示';
+                    $scope.toast.words = data.result.message;
+                    $scope.overlay_flag = 1;
+                    $scope.words_flag = 1;
+                    setTimeout(function() {
+                        $scope.words_flag = 0;
+                        $scope.overlay_flag = 0;
+                        $scope.$apply();
+                        $scope.checkcode_open();
+                    }, 3000);
+                    return;
+
                 }
             })
-        }
+        };
+
+        var poll = function(advance_order_id) {
+            var poll_count = 0;
+            var poll_timer = setInterval(function() {
+                $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/poll?advance_order_id=' + advance_order_id + '&dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+                    if (data.code == 200 && data.result.url) {
+                        clearInterval(poll_timer);
+                        location.href = data.result.url;
+                        return;
+                    }
+                    if (data.code == 201) {
+                        $scope.status = 1;
+                        $scope.storage_flag = 1;
+                        $scope.buy_words = "抢光了";
+                        $scope.buy_class = "deal-buy-o";
+                        $rootScope.dealStatus[$scope.dealId] = 1;
+                        clearInterval(poll_timer);
+
+                        return;
+                    }
+                    if (data.code == 205) {
+                        if (poll_count > 5) {
+                            clearInterval(poll_timer);
+                        }
+                        poll_count++;
+                        return;
+                    }
+                    if (data.code == 400) {
+                        alert('400:参数错误');
+                        return;
+                    }
+                })
+            }, 2000);
+        };
 
         $scope.overlay_flag = 0;
         $scope.remind_flag = 0;

@@ -1,7 +1,6 @@
  /* App Module */
 
  var skApp = angular.module('skApp', [
-     'lodash',
      'ngRoute',
      'skDirs',
      'skFilters',
@@ -37,8 +36,9 @@
          $rootScope.dealStatus = [];
          $rootScope.buy_status = [];
 
-     // $rootScope.current.dealroups[1001] = 0;
      $rootScope.cityid = ($location.search()).cityid;
-     $rootScope.token = ($location.search()).token;
+     $rootScope.token = ($location.search()).token?($location.search()).token:'';
+     $rootScope.version = ($location.search()).version?($location.search()).version:'';
+     $rootScope.dpid = ($location.search()).dpid?($location.search()).dpid:'';
      if ($rootScope.token) $cookies.token = $rootScope.token;
  });
