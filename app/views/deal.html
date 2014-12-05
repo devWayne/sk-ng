@@ -22,8 +22,8 @@
             <span class="confirm-btn" ng-click="codecheck()">抢</span>
         </div>
     </div>
-    <remind-popup ng-show="remind_flag"></remind-popup>
-    <toast ng-show="words_flag"></toast>
+    <remind-popup ng-show="remind.remind_flag"></remind-popup>
+    <toast ng-show="toast.words_flag"></toast>
     <div ng-controller="timer"></div>
     <div class="storage-tips" ng-show="storage_flag">
         <i class="alert"></i>
@@ -47,7 +47,7 @@
                 </span>
                 <span class="deal-old-price">&#165;{{deal.list_price}}</span>
 		
-                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="openRemind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
 		 <span ng-show="status == 1"><deal-buy></deal-buy></span>
                 <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
                	            </div>
@@ -83,14 +83,14 @@
                     </ul>
                 </div>
             </div>
-            <div class="dialogue-overlay" ng-show="overlay_flag"></div>
+            <div class="dialogue-overlay" ng-show="toast.overlay_flag || remind.overlay_flag"></div>
             <div ng-show="scrollBlk" style="display: block; width:100%; box-sizing:border-box; position: fixed; z-index: 5000; left: 0px; top: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(216, 216, 216); padding: 10px 15px; background-color: rgb(255, 255, 255);">
                 <div class="deal-price-box deal-price-box-float">
                     <span class="deal-price">
 					￥<span>{{deal.current_price}}</span>
                     </span>
                     <span class="deal-old-price">¥{{deal.list_price}}</span>
-                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="openRemind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
 		      <span ng-show="status == 1"><deal-buy></deal-buy></span>
 		    <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
 
