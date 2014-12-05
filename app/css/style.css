@@ -80,11 +80,11 @@ padding: 5px;
 }
 .check-box .checkcode{
 background-color: #ddd;
-padding: 10px 0;
-margin: 0 10px;
-font-size: 16px;
+padding: 5px 0;
+margin: 0px 10px;
+font-size: 20px;
 border-radius: 5px;
-color:#777;
+color: #777;
 }
 .check-box .tips{
 text-align: left;
@@ -94,30 +94,27 @@ color: #aaa;
 .check-box input{
 width: 90%;
 box-sizing: border-box;
-height: 30px;
-line-height: 30px;
+height: 45px;
+line-height: 45px;
 font-size: 16px;
 border-radius: 5px;
 }
 
-
-.check-box .btn-blk{
-box-sizing:border-box;
-}
 .check-box .btn-blk .cancel-btn{
-color:white;
-font-size:14px;
+box-sizing: border-box;
+color: white;
+font-size: 14px;
 padding: 8px 0px;
-margin: 8px;
 border-radius: 5px;
+margin: 8px 0px 8px 8px;
 background-color: #ccc;
-width: 30%;
+width: 35%;
 display: inline-block;
-cursor:pointer;
-}
+cursor: pointer;}
 
 
 .check-box .btn-blk .confirm-btn{
+box-sizing:border-box;
 color:white;
 font-size:14px;
 padding: 8px 0px;

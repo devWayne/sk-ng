@@ -47,7 +47,7 @@
                 </span>
                 <span class="deal-old-price">&#165;{{deal.list_price}}</span>
 		
-                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="openRemind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind_open()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
 		 <span ng-show="status == 1"><deal-buy></deal-buy></span>
                 <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
                	            </div>
@@ -69,8 +69,8 @@
                 <div class="other-groupon-title">本店其他团购</div>
                 <div class="other-groupon-list">
                     <ul>
-                        <li ng-repeat="sibling in siblings">
-                            <a href="dianping://tuandeal?id={{id}}">
+                        <li ng-repeat="rich_button in rich_buttons">
+			<a href="{{url}}">
                                 <img src="{{thumb_photo_url}}" alt="description">
 
                                 <div class="other-groupon-text">
@@ -90,7 +90,7 @@
 					￥<span>{{deal.current_price}}</span>
                     </span>
                     <span class="deal-old-price">¥{{deal.list_price}}</span>
-                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="openRemind()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind_open()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
 		      <span ng-show="status == 1"><deal-buy></deal-buy></span>
 		    <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
 
