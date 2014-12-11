@@ -14,8 +14,8 @@
  lodash.factory('_', function() {
      return window._;
  });
- skApp.config(['$routeProvider',
-     function($routeProvider) {
+ skApp.config(['$routeProvider','$compileProvider',
+     function($routeProvider,$compileProvider) {
          $routeProvider.
          when('/dealist', {
              templateUrl: 'views/dealist.html',
@@ -28,17 +28,24 @@
          otherwise({
              redirectTo: '/dealist'
          });
-      }
+	 $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|dianping):/);
+     }
  ]);
 
  skApp.run(function($rootScope, $http, $location, $cookies) {
-	 $rootScope.dealInfo = [];
-         $rootScope.dealStatus = [];
-         $rootScope.buy_status = [];
 
+     /**
+      * app init
+      */
+     $rootScope.dealInfo = [];
+     $rootScope.dealStatus = [];
+     $rootScope.buy_status = [];
+     $rootScope.dealgroups =[];
+
+     
      $rootScope.cityid = ($location.search()).cityid;
-     $rootScope.token = ($location.search()).token?($location.search()).token:'';
-     $rootScope.version = ($location.search()).version?($location.search()).version:'';
-     $rootScope.dpid = ($location.search()).dpid?($location.search()).dpid:'';
+     $rootScope.token = ($location.search()).token ? ($location.search()).token : '';
+     $rootScope.version = ($location.search()).version ? ($location.search()).version : '';
+     $rootScope.dpid = ($location.search()).dpid ? ($location.search()).dpid : '';
      if ($rootScope.token) $cookies.token = $rootScope.token;
  });

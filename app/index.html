@@ -19,5 +19,27 @@
 <body>
     <div ng-view></div>
 </body>
+<script>
+    window.DPApp = {
+        shareConfig: {
+            url: "http://evt.dianping.com/flashsale/sharepage/index.html",
+            image: "http://www.dpfile.com/flashsale/sharepage/thumb.png",
+            title: "大众点评天天秒杀",
+            desc: "吃货朋友圈今年最火，30秒决定你的RP"
+        }
+    }
+
+    function initShare() {
+        var iframe = document.createElement("iframe"),
+            frameContainer = document.createElement("div"),
+            shareConfig = "dpshare://_?content=" + encodeURIComponent(JSON.stringify(DPApp.shareConfig));
+
+        frameContainer.setAttribute('style', 'display:none');
+        frameContainer.appendChild(iframe);
+        document.body.appendChild(frameContainer);
+        iframe.setAttribute("src", shareConfig);
+    }
+    initShare();
+</script>
 
 </html>

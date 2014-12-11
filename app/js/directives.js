@@ -1,16 +1,6 @@
 /* Directives */
 
-var skDirectives = angular.module('skDirs', []);
-
-
-skDirectives.directive('dealistWannajoin', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        template: "<span class='wantbuy'><span ng-transclude></span>人想买</span>"
-    };
-});
+var skDirectives = angular.module('skDirs', [])
 
 skDirectives.directive('dealistBuy', function() {
     return {
@@ -39,7 +29,7 @@ skDirectives.directive('dealBuy', function() {
         template: '<a href="javascript:void(0)" ng-click="checkcode_open()" class="deal-buy J-deal-buy-btn {{buy_class}}">{{buy_words}}</a>',
         link: function($scope, $element, $attrs, $transclude, $rootScope) {}
     }
-});
+});uua
 
 skDirectives.directive('countdown', function() {
     return {

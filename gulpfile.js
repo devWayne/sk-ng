@@ -84,7 +84,6 @@ gulp.task('copy', [
 
 gulp.task('compile', [
     'compile:less',
-    'concat-angular:js',
     'concat:js'
 ]);
 

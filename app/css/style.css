@@ -67,8 +67,8 @@ padding: 0px 20px;
 }
 
 .check-box{
-z-index:9999;
-text-align:center;
+z-index: 9999;
+text-align: center;
 background-color: white;
 width: 100%;
 position: fixed;

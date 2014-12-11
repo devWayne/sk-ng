@@ -21,7 +21,32 @@
     </div>
     <div class="miaosha-deal-content">
         <ul>
-            <li ng-repeat="deal in now_deals">
+            <li ng-repeat="deal in now_deals[0]">
+                <a href="#/deal/{{deal.id}}">
+                    <img ng-src={{deal.thumb_photo_url}} alt="">
+                    <div class="miaosha-deal-text">
+                        <p class="miaosha-deal-title">{{deal.title}}</p>
+                        <p class="miaosha-deal-intro">{{deal.description}}</p>
+                        <div class="miaosha-deal-price">
+                            <span class="oneprize nowprize">￥{{deal.current_price}}</span>
+                            <span class="twoprize del">￥{{deal.list_price}}</span>
+
+                            <span ng-if="status == 0"><span class='wantbuy'>{{deal.wanna_join}}</span>人想买</span>
+                            <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
+
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav nav-n" ng-if="now_deals[1]">
+        <span class="nav-tag">分时展示</span>
+    </div>
+
+        <div class="miaosha-deal-content" ng-if="now_deals[1]">
+        <ul>
+            <li ng-repeat="deal in now_deals[1]">
                 <a href="#/deal/{{deal.id}}">
                     <img ng-src={{deal.thumb_photo_url}} alt="">
                     <div class="miaosha-deal-text">

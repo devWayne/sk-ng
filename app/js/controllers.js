@@ -4,23 +4,35 @@ var skControllers = angular.module('skControllers', ['skServices']);
 
 skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
-        /** share popup **/
 
+        /** share popup **/
         $scope.share_visable = false;
+	$scope.now_deals=[];
         $scope.share = function() {
             $scope.share_visable = !$scope.share_visable;
         }
-        if ($rootScope.dealgroups == undefined) {
+
+
+        /**
+         *  dealist init
+         */
+        if ($rootScope.dealgroups.length==0) {
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
-                $rootScope.dealgroups = data.result.current[0].dealgroups;
+                if (data.result == undefined) {
+                    return;
+                }
+                $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
+                $rootScope.dealgroups[1] = data.result.current[1].dealgroups;
                 $rootScope.nextdealgroups = data.result.next.dealgroups;
                 $rootScope.nexttime = data.result.next.time;
                 $scope.rich_buttons = data.result.rich_buttons;
-                $scope.now_deals = $rootScope.dealgroups;
+                $scope.now_deals[0] = $rootScope.dealgroups[0];
+                $scope.now_deals[1] = $rootScope.dealgroups[1];
                 $scope.next_deals = $rootScope.nextdealgroups;
             });
         } else {
-            $scope.now_deals = $rootScope.dealgroups;
+            $scope.now_deals[0] = $rootScope.dealgroups[0];
+            $scope.now_deals[1] = $rootScope.dealgroups[1];
             $scope.next_deals = $rootScope.nextdealgroups;
         }
     }
@@ -39,41 +51,46 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
          */
         if ($rootScope.dealInfo[$scope.dealId] == undefined) {
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
-                $scope.deal.title = data.result.data.title;
-                $scope.deal.description = data.result.data.description;
-                $scope.deal.current_price = data.result.data.current_price;
-                $scope.deal.list_price = data.result.data.list_price;
-                $scope.deal.detail = data.result.data.detail;
-                $scope.deal.tips = data.result.data.tips;
-                $scope.deal.thumb_photo_url = data.result.data.thumb_photo_url;
-                $scope.deal.banner_photo_url = data.result.data.banner_photo_url;
-                $scope.deal.siblings = data.result.siblings;
-                $scope.deal.shop_count = data.result.shop_count;
-                $scope.deal.shops_url = data.result.shops_url;
+                $scope.deal = data.result;
                 $rootScope.dealInfo[$scope.dealId] = $scope.deal;
-                if (data.result.data.status != 2) {
+                if (data.result.data.status == 2) {
                     $scope.buy_words = "抢";
                     $scope.buy_class = "deal-buy-z";
-                } else {
+                } 
+		if(data.result.data.status == 1){
+                    $scope.buy_words = "抢光了";
+                    $scope.buy_class = "deal-buy-o";
+                    $rootScope.dealStatus[$scope.dealId] = 1;
+                    $scope.checkcode_open = 0;
+                }
+
+		else {
                     $scope.storage_flag = 1;
                     $scope.buy_words = "抢光了";
                     $scope.buy_class = "deal-buy-o";
                     $rootScope.dealStatus[$scope.dealId] = 1;
-		    $scope.checkcode_open=0;
+                    $scope.checkcode_open = 0;
                 }
             });
         } else {
             $scope.deal = $rootScope.dealInfo[$scope.dealId];
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
-                if (data.result.data.status != 2) {
+                 if (data.result.data.status == 2) {
                     $scope.buy_words = "抢";
                     $scope.buy_class = "deal-buy-z";
-                } else {
+                } 
+		if(data.result.data.status == 1){
+                    $scope.buy_words = "抢光了";
+                    $scope.buy_class = "deal-buy-o";
+                    $rootScope.dealStatus[$scope.dealId] = 1;
+                    $scope.checkcode_open = 0;
+                }
+		else {
                     $scope.storage_flag = 1;
                     $scope.buy_words = "抢光了";
                     $scope.buy_class = "deal-buy-o";
                     $rootScope.dealStatus[$scope.dealId] = 1;
-		     $scope.checkcode_open=0;
+                    $scope.checkcode_open = 0;
                 }
             });
         }
@@ -95,7 +112,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
          * @return {void} description
          */
         $scope.codecheck = function() {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&dpid=' + $rootScope.dpid + '&version=' + $rootScope.version + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&dpid=' + $rootScope.dpid + '&version=' + $rootScope.version + '&city_id=' + $rootScope.cityid + '&token=!&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 205 && data.result.advance_order_id) {
                     $scope.checkcode_close();
                     $scope.status = 2;
@@ -111,12 +128,15 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                     return;
 
                 } else {
-                    $scope.toast = popupService.openToast('提示',data.result.message);
-		    $scope.checkcode_close();
+                    $scope.toast = popupService.openToast('提示', data.result.message);
+                    $scope.checkcode_close();
+                    $scope.buy_words = "抢光了";
+                    $scope.buy_class = "deal-buy-o";
+                    $rootScope.dealStatus[$scope.dealId] = 1;
                     setTimeout(function() {
                         $scope.toast = popupService.closeToast();
                         $scope.$apply();
-		    }, 3000);
+                    }, 3000);
                     return;
                 }
             })
@@ -145,7 +165,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         clearInterval(poll_timer);
                         $scope.checkcode_flag = 0;
-			 $scope.checkcode_open=0;
+                        $scope.checkcode_open = 0;
                         return;
                     }
                     if (data.code == 205) {
@@ -163,7 +183,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                         $scope.buy_class = "deal-buy-o";
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         clearInterval(poll_timer);
-			$scope.checkcode_open=0;
+                        $scope.checkcode_open = 0;
                         return;
                     }
                 })
@@ -174,6 +194,9 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         /**
          * view control
          */
+        $scope.storage_close = function() {
+            $scope.storage_flag = 0;
+        };
         $scope.storage_flag = 0;
         $scope.remind_open = function() {
             $scope.remind = popupService.openRemind();
@@ -184,9 +207,10 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         $scope.checkcode_open = function() {
             $scope.checkcode_num = "";
             $scope.checkcode_flag = 1;
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+            $scope.checkcode_overlay = 1;
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&token=!&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 203) {
-		     $scope.checkcode_flag = 0;
+                    $scope.checkcode_flag = 0;
                     location.href = data.result.login_url;
                     return;
                 }
@@ -197,6 +221,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         }
         $scope.checkcode_close = function() {
             $scope.checkcode_flag = 0;
+            $scope.checkcode_overlay = 0;
         }
 
         /**
@@ -214,28 +239,28 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                 }, 3000);
                 return;
             };
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+                switch (data.code) {
+                    case 200:
+                        $scope.toast = popupService.openToast('设置成功', '开抢前您将收到购买提醒');
+                        break;
+                    case 201:
 
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&callback=JSON_CALLBACK').success(function(data) {
+                        $scope.toast = popupService.openToast('设置成功', '您已经设置过提醒');
+                        break;
 
-                if (data.code == 200) {
-                    $scope.toast = popupService.openToast('设置成功', '开抢前您将收到购买提醒');
-                }
-                if (data.code == 201) {
+                    case 202:
+                        $scope.toast = popupService.openToast('设置失败', '请供手机号码');
+                        break;
 
-                    $scope.toast = popupService.openToast('设置成功', '您已经设置过提醒');
+                    case 203:
+                        $scope.remind = popupService.closeRemind();
+                        location.href = data.result.login_url;
+                        break;
 
-                }
-                if (data.code == 202) {
-                    $scope.toast = popupService.openToast('设置失败', '请供手机号码');
-
-                }
-                if (data.code == 203) {
-                    $scope.remind = popupService.closeRemind();
-                    location.href = data.result.login_url;
-
-                }
-                if (data.code == 400) {
-                    $scope.toast = popupService.openToast('设置失败', '参数错误');
+                    case 400:
+                        $scope.toast = popupService.openToast('设置失败', '参数错误');
+                        break;
 
                 }
                 $scope.remind = popupService.closeRemind();
