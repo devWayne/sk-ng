@@ -34,7 +34,20 @@ gulp.task('concat:js', function() {
         .pipe(gulp.dest('dist/js'))
 });
 
-
+gulp.task('uglify:js', function() {
+    return gulp.src([
+            'app/js/app.js',
+            'app/js/controllers.js',
+            'app/js/directives.js',
+            'app/js/filters.js',
+            'app/js/services.js'
+        ])
+        .pipe(concat('main.js'))
+        .pipe(uglify({
+            mangle: false
+        }))
+        .pipe(gulp.dest('dist/js'))
+});
 
 gulp.task('compile:less', function() {
 

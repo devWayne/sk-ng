@@ -1,4 +1,4 @@
-<div ng-controller="skDealCtrl" style="position:absolute" scroll>
+<div style="position:absolute" scroll>
 
     <div class="check-box" ng-show="checkcode_flag">
         <div class="title">请输入4位验证码</div>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="deal-accordion title-collapse">
-	    <a class="deal-accordion-title" href="dianping://shopidlist?ids={{deal.shop_ids}}">
+	    <a class="deal-accordion-title" href="dianping://shopidlist?ids={{deal.shop_ids}}" ng-if="deal.shop_count">
 		<span>查看全部{{deal.shop_count}}家适用商户</span>
                 <span class="arrow"></span>
                 </a>

@@ -7,17 +7,17 @@ skDirectives.directive('dealistBuy', function() {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: "<span class='{{class}}'>{{words}}</span>",
+        template: "<span class='dealist-buy'>抢</span>",
         controller: function($scope, $element, $attrs, $transclude, $rootScope) {
-            if ($rootScope.dealStatus[$scope.$parent.deal.dealId] == 0) {
+           if ($rootScope.dealStatus[$scope.$parent.deal.dealId] == 1) {
                 $scope.words = "抢光了";
                 $scope.class = "wantbuy";
 
             } else {
                 $scope.words = "抢"
                 $scope.class = "dealist-buy"
-            }
-        }
+            }    
+	}
     }
 });
 
@@ -29,7 +29,7 @@ skDirectives.directive('dealBuy', function() {
         template: '<a href="javascript:void(0)" ng-click="checkcode_open()" class="deal-buy J-deal-buy-btn {{buy_class}}">{{buy_words}}</a>',
         link: function($scope, $element, $attrs, $transclude, $rootScope) {}
     }
-});uua
+});
 
 skDirectives.directive('countdown', function() {
     return {

@@ -7,7 +7,7 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
 
         /** share popup **/
         $scope.share_visable = false;
-	$scope.now_deals=[];
+        $scope.now_deals = [];
         $scope.share = function() {
             $scope.share_visable = !$scope.share_visable;
         }
@@ -16,14 +16,27 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
         /**
          *  dealist init
          */
-        if ($rootScope.dealgroups.length==0) {
+        if ($rootScope.dealgroups.length == 0) {
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
                 if (data.result == undefined) {
                     return;
+		}
+		 if (data.result.current[0] != undefined) {
+                     $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
                 }
-                $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
-                $rootScope.dealgroups[1] = data.result.current[1].dealgroups;
+
+                angular.forEach($rootScope.dealgroups[0], function(idx, value) {
+                    if (idx.status == 2) {
+                        $rootScope.dealStatus[idx.id] = 1;
+                    }
+                });
+                if (data.result.current[1] != undefined) {
+                    $rootScope.dealgroups[1] = data.result.current[1].dealgroups;
+                }
                 $rootScope.nextdealgroups = data.result.next.dealgroups;
+                angular.forEach($rootScope.nextdealgroups, function(idx, value) {
+                    $rootScope.dealStatus[idx.id] = 2;
+                })
                 $rootScope.nexttime = data.result.next.time;
                 $scope.rich_buttons = data.result.rich_buttons;
                 $scope.now_deals[0] = $rootScope.dealgroups[0];
@@ -53,44 +66,51 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 $scope.deal = data.result;
                 $rootScope.dealInfo[$scope.dealId] = $scope.deal;
-                if (data.result.data.status == 2) {
-                    $scope.buy_words = "抢";
-                    $scope.buy_class = "deal-buy-z";
-                } 
-		if(data.result.data.status == 1){
-                    $scope.buy_words = "抢光了";
-                    $scope.buy_class = "deal-buy-o";
-                    $rootScope.dealStatus[$scope.dealId] = 1;
-                    $scope.checkcode_open = 0;
+                if ($rootScope.dealStatus[$scope.dealId] == 2) {
+                    $scope.status = 0;
                 }
-
-		else {
-                    $scope.storage_flag = 1;
+		else if ($rootScope.dealStatus[$scope.dealId] == 1) {
                     $scope.buy_words = "抢光了";
                     $scope.buy_class = "deal-buy-o";
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     $scope.checkcode_open = 0;
+                } else {
+                    if (data.result.data.status == 1) {
+                        $scope.buy_words = "抢";
+                        $scope.buy_class = "deal-buy-z";
+                    }
+                    if (data.result.data.status == 2) {
+                        $scope.buy_words = "抢光了";
+                        $scope.buy_class = "deal-buy-o";
+                        $rootScope.dealStatus[$scope.dealId] = 1;
+                        $scope.checkcode_open = 0;
+                    }
+
                 }
             });
         } else {
             $scope.deal = $rootScope.dealInfo[$scope.dealId];
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
-                 if (data.result.data.status == 2) {
-                    $scope.buy_words = "抢";
-                    $scope.buy_class = "deal-buy-z";
-                } 
-		if(data.result.data.status == 1){
-                    $scope.buy_words = "抢光了";
-                    $scope.buy_class = "deal-buy-o";
-                    $rootScope.dealStatus[$scope.dealId] = 1;
-                    $scope.checkcode_open = 0;
+                if ($rootScope.dealStatus[$scope.dealId] == 2) {
+                    $scope.status = 0;
                 }
-		else {
-                    $scope.storage_flag = 1;
+                else if ($rootScope.dealStatus[$scope.dealId] == 1) {
                     $scope.buy_words = "抢光了";
                     $scope.buy_class = "deal-buy-o";
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     $scope.checkcode_open = 0;
+                } else {
+                    if (data.result.data.status == 1) {
+                        $scope.buy_words = "抢";
+                        $scope.buy_class = "deal-buy-z";
+                    }
+                    if (data.result.data.status == 2) {
+                        $scope.buy_words = "抢光了";
+                        $scope.buy_class = "deal-buy-o";
+                        $rootScope.dealStatus[$scope.dealId] = 1;
+                        $scope.checkcode_open = 0;
+                    }
+
                 }
             });
         }
@@ -132,6 +152,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                     $scope.checkcode_close();
                     $scope.buy_words = "抢光了";
                     $scope.buy_class = "deal-buy-o";
+                    $scope.checkcode_open = 0;
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     setTimeout(function() {
                         $scope.toast = popupService.closeToast();
@@ -141,7 +162,6 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                 }
             })
         };
-
         /**
          * poll check
          * @param {varType} advance_order_id Description

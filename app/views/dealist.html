@@ -1,7 +1,7 @@
-<div ng-controller="skDealistCtrl">
-
+<div>
+	
     <div class="banner">
-        <img src="http://t3.s2.dpfile.com/t/cssnew/events/scare-buying-mobile/css/i/app_02.de235ed5774207264e47754d047d95ea.png">
+        <img src="http://www.dpfile.com/flashsale/css/img/webbanner.jpg">
         <a class='J_banner' href="" ng-click="share()">分享</a>
     </div>
     <div style="display: block;" ng-show="share_visable" ng-click="share()">
@@ -12,11 +12,11 @@
     <!--抢购中-->
 
 
-    <div class="nav nav-s">
+    <div class="nav nav-s" ng-if="now_deals[1]">
         <span class="nav-tag"> <span ng-if="status == 0">即将开抢</span>  <span ng-if="status == 1" style="color:rgb(255,102,51)">抢购中</span></span>
         <span class="nav-tag-border"></span>
         <span class="nav-countdown" ng-hide="status">
-			距开抢<countdown></countdown>
+		距开抢<countdown></countdown>
 		</span>
     </div>
     <div class="miaosha-deal-content">
@@ -28,12 +28,12 @@
                         <p class="miaosha-deal-title">{{deal.title}}</p>
                         <p class="miaosha-deal-intro">{{deal.description}}</p>
                         <div class="miaosha-deal-price">
-                            <span class="oneprize nowprize">￥{{deal.current_price}}</span>
+                            <span class="oneprize" ng-class="{true: 'nowprize-soldout', false: 'nowprize'}[status == 1 && $root.dealStatus[deal.id]==1]">￥{{deal.current_price}}</span>
                             <span class="twoprize del">￥{{deal.list_price}}</span>
 
-                            <span ng-if="status == 0"><span class='wantbuy'>{{deal.wanna_join}}</span>人想买</span>
-                            <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
-
+                            <span ng-if="status == 0 && deal.wanna_join" class='wantbuy'>{{deal.wanna_join}}人想买</span>
+                            <span ng-if="status == 1 && $root.dealStatus[deal.id]!=1" class='dealist-buy'>抢</span>
+			    <span ng-if="status == 1 && $root.dealStatus[deal.id]==1" class='wantbuy'>抢光了</span>
                         </div>
                     </div>
                 </a>
@@ -56,8 +56,9 @@
                             <span class="oneprize nowprize">￥{{deal.current_price}}</span>
                             <span class="twoprize del">￥{{deal.list_price}}</span>
 
-                            <span ng-if="status == 0"><dealist-wannajoin>{{deal.wanna_join}}</dealist-wannajoin></span>
-                            <span ng-if="status == 1"><dealist-buy></dealist-buy></span>
+                            <span ng-if="status == 0" class='wantbuy'>{{deal.wanna_join}}人想买</span>
+                            <span ng-if="status == 1 && $root.dealStatus[deal.id]!=1" class='dealist-buy'>抢</span>
+			    <span ng-if="status == 1 && $root.dealStatus[deal.id]==1" class='wantbuy'>抢光了</span>
 
                         </div>
                     </div>
@@ -67,11 +68,11 @@
     </div>
 
     <div style="border:6px solid rgb(240,240,240)"></div>
-    <div class="nav nav-n">
+    <div class="nav nav-n" ng-if="next_deals.length">
         <span class="nav-tag">下期预告</span>
         <span class="nav-countdown">{{$root.nexttime}}开抢</span>
     </div>
-    <div class="miaosha-deal-content">
+    <div class="miaosha-deal-content"  ng-if="next_deals.length">
         <ul>
             <li ng-repeat="deal in next_deals">
                 <a href="#/deal/{{deal.id}}">
@@ -80,22 +81,21 @@
                         <p class="miaosha-deal-title">{{deal.title}}</p>
                         <p class="miaosha-deal-intro">{{deal.description}}</p>
                         <div class="miaosha-deal-price">
-                            <span class="oneprize nowprize">￥{{deal.current_price}}</span>
+                            <span class="oneprize nowprize-soldout">￥{{deal.current_price}}</span>
                             <span class="twoprize del">￥{{deal.list_price}}</span>
-                            <dealist-wannajoin>{{deal.wanna_join}}</dealist-wannajoin>
                         </div>
                     </div>
                 </a>
             </li>
         </ul>
     </div>
-    <div>
+    <div ng-if="rich_buttons.length">
         <h3 class='subtitle'>相关活动</h3>
         <div class="other-groupon-list">
             <ul>
                 <li ng-repeat="rich_button in rich_buttons">
                     <a href="{{rich_button.url}}">
-                        <img src="{{rich_button.icon}}" alt="description">
+                        <img ng-src={{rich_button.icon}} alt="description">
                     </a>
                 </li>
             </ul>
