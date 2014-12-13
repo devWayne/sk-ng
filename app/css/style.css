@@ -66,13 +66,12 @@ bottom: 3px;
 right: -10px;
 width: 48px;
 padding: 5px 5px;
-color: white !important;
+color: white;
 text-align: center;
 background-color: #f63;
 border: 0;
 border-radius: 5px;
 font-family: "微软雅黑";
-
 }
 
 .check-box{

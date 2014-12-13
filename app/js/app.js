@@ -41,6 +41,7 @@
      $rootScope.dealStatus = [];
      $rootScope.buy_status = [];
      $rootScope.dealgroups =[];
+     $rootScope.allDeals=[];
 
      
      $rootScope.cityid = ($location.search()).cityid;

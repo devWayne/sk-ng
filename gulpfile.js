@@ -68,6 +68,11 @@ gulp.task('copy:misc', function() {
     ]).pipe(gulp.dest('dist/views/'));
 });
 
+gulp.task('copy:css',function(){
+    return gulp.src('app/css/**')
+    .pipe(gulp.dest('dist/css/'));
+})
+
 
 gulp.task('jshint', function() {
     return gulp.src([
@@ -92,7 +97,8 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('copy', [
-    'copy:misc'
+    'copy:misc',
+    'copy:css'
 ]);
 
 gulp.task('compile', [
@@ -104,10 +110,9 @@ gulp.task('compile', [
 gulp.task('build', function(done) {
     runSequence(
         ['clean'],
-        'compile:less',
         'concat:js',
-        'concat-angular:js',
-        'copy',
+        'copy:css',
+	'copy:misc',
         done);
 });
 

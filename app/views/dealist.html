@@ -12,7 +12,7 @@
     <!--抢购中-->
 
 
-    <div class="nav nav-s" ng-if="now_deals[1]">
+    <div class="nav nav-s" ng-if="now_deals[0]">
         <span class="nav-tag"> <span ng-if="status == 0">即将开抢</span>  <span ng-if="status == 1" style="color:rgb(255,102,51)">抢购中</span></span>
         <span class="nav-tag-border"></span>
         <span class="nav-countdown" ng-hide="status">
@@ -21,7 +21,7 @@
     </div>
     <div class="miaosha-deal-content">
         <ul>
-            <li ng-repeat="deal in now_deals[0]">
+            <li ng-repeat="deal in now_deals[0]|orderBy: 'status'">
                 <a href="#/deal/{{deal.id}}">
                     <img ng-src={{deal.thumb_photo_url}} alt="">
                     <div class="miaosha-deal-text">
@@ -46,7 +46,7 @@
 
         <div class="miaosha-deal-content" ng-if="now_deals[1]">
         <ul>
-            <li ng-repeat="deal in now_deals[1]">
+            <li ng-repeat="deal in now_deals[1]|orderBy: 'status'">
                 <a href="#/deal/{{deal.id}}">
                     <img ng-src={{deal.thumb_photo_url}} alt="">
                     <div class="miaosha-deal-text">

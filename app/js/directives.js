@@ -2,31 +2,12 @@
 
 var skDirectives = angular.module('skDirs', [])
 
-skDirectives.directive('dealistBuy', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        template: "<span class='dealist-buy'>抢</span>",
-        controller: function($scope, $element, $attrs, $transclude, $rootScope) {
-           if ($rootScope.dealStatus[$scope.$parent.deal.dealId] == 1) {
-                $scope.words = "抢光了";
-                $scope.class = "wantbuy";
-
-            } else {
-                $scope.words = "抢"
-                $scope.class = "dealist-buy"
-            }    
-	}
-    }
-});
-
 skDirectives.directive('dealBuy', function() {
     return {
         restrict: 'E',
         replace: true,
         transclude: true,
-        template: '<a href="javascript:void(0)" ng-click="checkcode_open()" class="deal-buy J-deal-buy-btn {{buy_class}}">{{buy_words}}</a>',
+        template: '<a href="javascript:void(0)" ng-click="checkcode_open()" class="deal-buy J-deal-buy-btn {{buy.classStyle}}">{{buy.words}}</a>',
         link: function($scope, $element, $attrs, $transclude, $rootScope) {}
     }
 });
@@ -118,7 +99,7 @@ skDirectives.directive('toast', function() {
         replace: true,
         transclude: true,
 	controller:'win_position',
-        template: '<div style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:40px;left:{{left}}px;top:{{top}}px;padding:10px 0px;"><h3>{{toast.title}}</h3><p>{{toast.words}}</p></div>',
+        template: '<div style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}-200px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:40px;left:{{left}}px;top:{{top}}px;padding:10px 0px;"><h3>{{toast.title}}</h3><p>{{toast.words}}</p></div>',
         link: function($scope, $element, $attrs) {
 
         }

@@ -20,9 +20,10 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
                 if (data.result == undefined) {
                     return;
-		}
-		 if (data.result.current[0] != undefined) {
-                     $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
+                }
+                if (data.result.current[0] != undefined) {
+                    $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
+                    $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.dealgroups[0]);
                 }
 
                 angular.forEach($rootScope.dealgroups[0], function(idx, value) {
@@ -32,8 +33,10 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
                 });
                 if (data.result.current[1] != undefined) {
                     $rootScope.dealgroups[1] = data.result.current[1].dealgroups;
+                    $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.dealgroups[1]);
                 }
                 $rootScope.nextdealgroups = data.result.next.dealgroups;
+                $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.nextdealgroups);
                 angular.forEach($rootScope.nextdealgroups, function(idx, value) {
                     $rootScope.dealStatus[idx.id] = 2;
                 })
@@ -51,37 +54,39 @@ skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
     }
 ]);
 
-skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$location', 'popupService',
-    function($scope, $routeParams, $rootScope, $http, $location, popupService) {
+skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$location', 'popupService', 'buyService',
+    function($scope, $routeParams, $rootScope, $http, $location, popupService, buyService) {
         $scope.dealId = $routeParams.dealId;
         $scope.checkcode_num = "";
         $scope.deal = {};
         $scope.toast = {};
-
+        $scope.buy = {};
 
         /**
          * deal init
          */
         if ($rootScope.dealInfo[$scope.dealId] == undefined) {
+            if ($rootScope.allDeals.length) {
+                $scope.deal.title = $rootScope.dealInfo[$scope.dealId].title;
+                $scope.deal.description = $rootScope.dealInfo[$scope.dealId].description;
+                $scope.deal.current_price = $rootScope.dealInfo[$scope.dealId].current_price;
+                $scope.deal.list_price = $rootScope.dealInfo[$scope.dealId].list_price;
+            }
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 $scope.deal = data.result;
                 $rootScope.dealInfo[$scope.dealId] = $scope.deal;
                 if ($rootScope.dealStatus[$scope.dealId] == 2) {
                     $scope.status = 0;
-                }
-		else if ($rootScope.dealStatus[$scope.dealId] == 1) {
-                    $scope.buy_words = "抢光了";
-                    $scope.buy_class = "deal-buy-o";
+                } else if ($rootScope.dealStatus[$scope.dealId] == 1) {
+                    $scope.buy = buyService.buyEnd();
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     $scope.checkcode_open = 0;
                 } else {
                     if (data.result.data.status == 1) {
-                        $scope.buy_words = "抢";
-                        $scope.buy_class = "deal-buy-z";
+                        $scope.buy = buyService.buyStart();
                     }
                     if (data.result.data.status == 2) {
-                        $scope.buy_words = "抢光了";
-                        $scope.buy_class = "deal-buy-o";
+                        $scope.buy = buyService.buyEnd();
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         $scope.checkcode_open = 0;
                     }
@@ -93,24 +98,19 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 if ($rootScope.dealStatus[$scope.dealId] == 2) {
                     $scope.status = 0;
-                }
-                else if ($rootScope.dealStatus[$scope.dealId] == 1) {
-                    $scope.buy_words = "抢光了";
-                    $scope.buy_class = "deal-buy-o";
+                } else if ($rootScope.dealStatus[$scope.dealId] == 1) {
+                    $scope.buy = buyService.buyEnd();
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     $scope.checkcode_open = 0;
                 } else {
                     if (data.result.data.status == 1) {
-                        $scope.buy_words = "抢";
-                        $scope.buy_class = "deal-buy-z";
+                        $scope.buy = buyService.buyStart();
                     }
                     if (data.result.data.status == 2) {
-                        $scope.buy_words = "抢光了";
-                        $scope.buy_class = "deal-buy-o";
+                        $scope.buy = buyService.buyEnd();
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         $scope.checkcode_open = 0;
                     }
-
                 }
             });
         }
@@ -150,8 +150,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                 } else {
                     $scope.toast = popupService.openToast('提示', data.result.message);
                     $scope.checkcode_close();
-                    $scope.buy_words = "抢光了";
-                    $scope.buy_class = "deal-buy-o";
+                    $scope.buy = buyService.buyEnd();
                     $scope.checkcode_open = 0;
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     setTimeout(function() {
@@ -162,6 +161,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                 }
             })
         };
+
         /**
          * poll check
          * @param {varType} advance_order_id Description
@@ -180,8 +180,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                     if (data.code == 201) {
                         $scope.status = 1;
                         $scope.storage_flag = 1;
-                        $scope.buy_words = "抢光了";
-                        $scope.buy_class = "deal-buy-o";
+                        $scope.buy = buyService.buyEnd();
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         clearInterval(poll_timer);
                         $scope.checkcode_flag = 0;
@@ -199,8 +198,7 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                         $scope.checkcode_flag = 0;
                         $scope.status = 1;
                         $scope.storage_flag = 1;
-                        $scope.buy_words = "抢光了";
-                        $scope.buy_class = "deal-buy-o";
+                        $scope.buy = buyService.buyEnd();
                         $rootScope.dealStatus[$scope.dealId] = 1;
                         clearInterval(poll_timer);
                         $scope.checkcode_open = 0;
@@ -210,7 +208,6 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
             }, 2000);
         };
 
-
         /**
          * view control
          */
@@ -219,7 +216,18 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         };
         $scope.storage_flag = 0;
         $scope.remind_open = function() {
-            $scope.remind = popupService.openRemind();
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+                if (data.code == 200) {
+                    $scope.toast = popupService.openToast('设置成功', '开抢前您将收到购买提醒');
+                    $scope.remind = popupService.closeRemind();
+                    setTimeout(function() {
+                        $scope.toast = popupService.closeToast();
+                        $scope.$apply();
+                    }, 3000);
+                } else {
+                    $scope.remind = popupService.openRemind();
+                }
+            });
         };
         $scope.remind_close = function() {
             $scope.remind = popupService.closeRemind();
@@ -230,8 +238,8 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
             $scope.checkcode_overlay = 1;
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&token=!&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 203) {
-                    $scope.checkcode_flag = 0;
-                    location.href = data.result.login_url;
+                    $scope.checkcode_close();
+		    location.href = data.result.login_url;
                     return;
                 }
                 if (data.code == 200) {
@@ -281,7 +289,6 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
                     case 400:
                         $scope.toast = popupService.openToast('设置失败', '参数错误');
                         break;
-
                 }
                 $scope.remind = popupService.closeRemind();
                 setTimeout(function() {
