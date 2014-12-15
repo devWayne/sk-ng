@@ -1,60 +1,9 @@
 /* Controllers */
 
-var skControllers = angular.module('skControllers', ['skServices']);
-
-skControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
-    function($scope, $http, $rootScope) {
-
-        /** share popup **/
-        $scope.share_visable = false;
-        $scope.now_deals = [];
-        $scope.share = function() {
-            $scope.share_visable = !$scope.share_visable;
-        }
+var dealControllers = angular.module('dealControllers', ['dealServices']);
 
 
-        /**
-         *  dealist init
-         */
-        if ($rootScope.dealgroups.length == 0) {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/list?city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
-                if (data.result == undefined) {
-                    return;
-                }
-                if (data.result.current[0] != undefined) {
-                    $rootScope.dealgroups[0] = data.result.current[0].dealgroups;
-                    $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.dealgroups[0]);
-                }
-
-                angular.forEach($rootScope.dealgroups[0], function(idx, value) {
-                    if (idx.status == 2) {
-                        $rootScope.dealStatus[idx.id] = 1;
-                    }
-                });
-                if (data.result.current[1] != undefined) {
-                    $rootScope.dealgroups[1] = data.result.current[1].dealgroups;
-                    $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.dealgroups[1]);
-                }
-                $rootScope.nextdealgroups = data.result.next.dealgroups;
-                $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.nextdealgroups);
-                angular.forEach($rootScope.nextdealgroups, function(idx, value) {
-                    $rootScope.dealStatus[idx.id] = 2;
-                })
-                $rootScope.nexttime = data.result.next.time;
-                $scope.rich_buttons = data.result.rich_buttons;
-                $scope.now_deals[0] = $rootScope.dealgroups[0];
-                $scope.now_deals[1] = $rootScope.dealgroups[1];
-                $scope.next_deals = $rootScope.nextdealgroups;
-            });
-        } else {
-            $scope.now_deals[0] = $rootScope.dealgroups[0];
-            $scope.now_deals[1] = $rootScope.dealgroups[1];
-            $scope.next_deals = $rootScope.nextdealgroups;
-        }
-    }
-]);
-
-skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$location', 'popupService', 'buyService',
+dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', '$http', '$location', 'popupService', 'buyService',
     function($scope, $routeParams, $rootScope, $http, $location, popupService, buyService) {
         $scope.dealId = $routeParams.dealId;
         $scope.checkcode_num = "";
@@ -66,12 +15,6 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
          * deal init
          */
         if ($rootScope.dealInfo[$scope.dealId] == undefined) {
-            if ($rootScope.allDeals.length) {
-                $scope.deal.title = $rootScope.dealInfo[$scope.dealId].title;
-                $scope.deal.description = $rootScope.dealInfo[$scope.dealId].description;
-                $scope.deal.current_price = $rootScope.dealInfo[$scope.dealId].current_price;
-                $scope.deal.list_price = $rootScope.dealInfo[$scope.dealId].list_price;
-            }
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 $scope.deal = data.result;
                 $rootScope.dealInfo[$scope.dealId] = $scope.deal;
@@ -300,3 +243,4 @@ skControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope', 
         }
     }
 ]);
+

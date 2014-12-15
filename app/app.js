@@ -2,27 +2,26 @@
 
  var skApp = angular.module('skApp', [
      'ngRoute',
-     'skDirs',
-     'skFilters',
-     'skControllers',
-     'skServices',
+     'dealDirectives',
+     'dealistDirectives',
+     'dealControllers',
+     'dealistControllers',
+     'dealServices',
+     'dealistServices',
      'ngSanitize',
      'ngCookies'
  ]);
 
- var lodash = angular.module('lodash', []);
- lodash.factory('_', function() {
-     return window._;
- });
+
  skApp.config(['$routeProvider','$compileProvider',
      function($routeProvider,$compileProvider) {
          $routeProvider.
          when('/dealist', {
-             templateUrl: 'views/dealist.html',
+             templateUrl: 'dealist/dealist.html',
              controller: 'skDealistCtrl'
          }).
          when('/deal/:dealId', {
-             templateUrl: 'views/deal.html',
+             templateUrl: 'deal/deal.html',
              controller: 'skDealCtrl'
          }).
          otherwise({
@@ -50,3 +49,4 @@
      $rootScope.dpid = ($location.search()).dpid ? ($location.search()).dpid : '';
      if ($rootScope.token) $cookies.token = $rootScope.token;
  });
+

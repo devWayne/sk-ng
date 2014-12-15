@@ -1,0 +1,89 @@
+<div style="position:absolute" scroll>
+
+    <div class="check-box" ng-show="checkcode_flag">
+        <div class="title">请输入4位验证码</div>
+        <div class="checkcode">{{checkcode_show}}</div>
+        <div class="tips">*验证码不区分大小写</div>
+        <div>
+            <input class="input-blk" name="checkcode_num" ng-model="checkcode_num" />
+        </div>
+        <div class="btn-blk">
+            <span class="cancel-btn" ng-click="checkcode_close()">取消</span>
+            <span class="confirm-btn" ng-click="codecheck()">抢</span>
+        </div>
+    </div>
+    <remind-popup ng-show="remind.remind_flag"></remind-popup>
+    <toast ng-show="toast.words_flag"></toast>
+    <div ng-controller="timer"></div>
+    <div class="storage-tips" ng-show="storage_flag">
+        <i class="alert"></i>
+        <p>该商品已被抢光，如10分钟后有人未付款，您将有购买机会。</p>
+        <a href="#" class="close" ng-click="storage_close"></a>
+    </div>
+    <div class="deal-img">
+        <img src="{{deal.data.banner_photo_url}}" />
+    </div>
+    <div class="deal-text">
+        <div class="deal-title-box">
+            <span class="deal-title">{{deal.data.title}}</span>
+            <span class="deal-title-border"></span>
+        </div>
+        <div class="deal-text-box">
+            <p class="deal-intro">{{deal.data.description}}</p>
+
+            <div class="deal-price-box">
+                <span class="deal-price">
+			￥<span>{{deal.data.current_price}}</span>
+                </span>
+                <span class="deal-old-price">&#165;{{deal.data.list_price}}</span>
+		
+                <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind_open()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+		 <span ng-show="status == 1"><deal-buy></deal-buy></span>
+                <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
+               	            </div>
+        </div>
+    </div>
+   <div class="deal-accordion J-deal-accordion title-collapse">
+        <!-- 添加title-collapse为折叠状态  去掉即为展开 -->
+	    <div ng-bind-html="deal.data.detail" class="con"></div>
+	    <div ng-bind-html="deal.data.tips" class="con"></div>
+    </div>
+
+    <div class="deal-accordion title-collapse">
+	    <a class="deal-accordion-title" href="dianping://shopidlist?ids={{deal.shop_ids}}" ng-if="deal.shop_count">
+		<span>查看全部{{deal.shop_count}}家适用商户</span>
+                <span class="arrow"></span>
+                </a>
+            </div>
+            <div class="other-groupon">
+                <div class="other-groupon-title" ng-if=" deal.siblings.length">本店其他团购</div>
+                <div class="other-groupon-list">
+                    <ul>
+                        <li ng-repeat="sibling in deal.siblings">
+			<a href="dianping://tuandeal?id={{sibling.id}}">
+                                <img src="{{sibling.thumb_photo_url}}" alt="description">
+
+                                <div class="other-groupon-text">
+                                    <p>{{sibling.description}}</p>
+                                    <span class="price">¥{{sibling.current_price}}</span>
+                                    <span class="old-price">¥{{sibling.list_price}}</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+	    <div class="dialogue-overlay" ng-show="toast.overlay_flag || remind.overlay_flag || checkcode_overlay"></div>
+            <div ng-show="scrollBlk" style="display: block; width:100%; box-sizing:border-box; position: fixed; z-index: 5000; left: 0px; top: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(216, 216, 216); padding: 10px 15px; background-color: rgb(255, 255, 255);">
+                <div class="deal-price-box deal-price-box-float">
+                    <span class="deal-price">
+					￥<span>{{deal.data.current_price}}</span>
+                    </span>
+                    <span class="deal-old-price">¥{{deal.data.list_price}}</span>
+                    <span ng-show="status == 0"><a href="javascript:void(0)" ng-click="remind_open()" class="deal-buy J-deal-buy-btn deal-buy-b">提醒我</a></span>
+		      <span ng-show="status == 1"><deal-buy></deal-buy></span>
+		    <span ng-show="status == 2"><a href="javascript:void(0)" class="deal-buy J-deal-buy-btn deal-buy-o">抢单中</a><span>
+
+                  
+		           </div></div>
+        </div>

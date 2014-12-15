@@ -30,5 +30,5 @@ node_modules
 *.swp
 *.swo
 dist
-app/bower_components
-lib/dist
+bower_components
+

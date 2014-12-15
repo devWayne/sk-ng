@@ -11,24 +11,15 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
 
-gulp.task('concat-angular:js', function() {
-    return gulp.src([
-            'app/bower_components/angular-route/angular-route.js',
-            'app/bower_components/angular-sanitize/angular-sanitize.js',
-            'app/bower_components/angular-cookies/angular-cookies.js',
-            'app/bower_components/loash/dist/loash.min.js'
-        ])
-        .pipe(concat('angular.concat.min.js'))
-        .pipe(gulp.dest('dist/js/'))
-});
-
 gulp.task('concat:js', function() {
     return gulp.src([
-            'app/js/app.js',
-            'app/js/controllers.js',
-            'app/js/directives.js',
-            'app/js/filters.js',
-            'app/js/services.js'
+            'app/app.js',
+            'app/deal/dealControllers.js',
+            'app/deal/dealDirectives.js',
+            'app/deal/dealServices.js',
+	    'app/dealist/dealistControllers.js',
+	    'app/dealist/dealistDirectives.js',
+            'app/dealist/dealistServices.js'
         ])
         .pipe(concat('main.js'))
         .pipe(gulp.dest('dist/js'))
@@ -36,11 +27,13 @@ gulp.task('concat:js', function() {
 
 gulp.task('uglify:js', function() {
     return gulp.src([
-            'app/js/app.js',
-            'app/js/controllers.js',
-            'app/js/directives.js',
-            'app/js/filters.js',
-            'app/js/services.js'
+            'app/app.js',
+            'app/deal/dealControllers.js',
+            'app/deal/dealDirectives.js',
+            'app/deal/dealServices.js',
+	    'app/dealist/dealistControllers.js',
+	    'app/dealist/dealistDirectives.js',
+            'app/dealist/dealistServices.js'
         ])
         .pipe(concat('main.js'))
         .pipe(uglify({
@@ -61,12 +54,18 @@ gulp.task('compile:less', function() {
 });
 
 
-gulp.task('copy:misc', function() {
+gulp.task('copy:deal', function() {
     return gulp.src([
-        'app/views/deal.html',
-        'app/views/dealist.html'
-    ]).pipe(gulp.dest('dist/views/'));
+        'app/deal/deal.html',
+    ]).pipe(gulp.dest('dist/deal/'));
 });
+
+gulp.task('copy:dealist', function() {
+    return gulp.src([
+        'app/dealist/dealist.html',
+    ]).pipe(gulp.dest('dist/dealist/'));
+});
+
 
 gulp.task('copy:css',function(){
     return gulp.src('app/css/**')
@@ -97,7 +96,8 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('copy', [
-    'copy:misc',
+    'copy:deal',
+    'copy:dealist',
     'copy:css'
 ]);
 
@@ -111,8 +111,7 @@ gulp.task('build', function(done) {
     runSequence(
         ['clean'],
         'concat:js',
-        'copy:css',
-	'copy:misc',
+        'copy',
         done);
 });
 

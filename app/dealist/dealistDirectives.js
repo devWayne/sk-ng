@@ -1,18 +1,9 @@
 /* Directives */
 
-var skDirectives = angular.module('skDirs', [])
+var dealistDirectives = angular.module('dealistDirectives', [])
 
-skDirectives.directive('dealBuy', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-        template: '<a href="javascript:void(0)" ng-click="checkcode_open()" class="deal-buy J-deal-buy-btn {{buy.classStyle}}">{{buy.words}}</a>',
-        link: function($scope, $element, $attrs, $transclude, $rootScope) {}
-    }
-});
 
-skDirectives.directive('countdown', function() {
+dealistDirectives.directive('countdown', function() {
     return {
         restrict: 'E',
         replace: true,
@@ -22,7 +13,7 @@ skDirectives.directive('countdown', function() {
     };
 });
 
-skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
+dealistDirectives.controller('timer', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         var hT = 60 * 60 * 1000,
             mT = 60 * 1000,
@@ -81,54 +72,3 @@ skDirectives.controller('timer', ['$scope', '$http', '$rootScope',
     }
 ]);
 
-skDirectives.controller('win_position',
-    function($scope, $element, $attrs, $rootScope, $window) {
-        $scope.width = 270;
-        $scope.height = 80;
-        $scope.top = ($window.innerHeight - $scope.height) / 2;
-        $scope.left = ($window.innerWidth - $scope.width) / 2;
-        $scope.overlayHeight = $window.innerHeight;
-        $scope.overlayWidth = $window.innerWidth;
-
-    });
-
-/* toast */
-skDirectives.directive('toast', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        transclude: true,
-	controller:'win_position',
-        template: '<div style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}-200px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:40px;left:{{left}}px;top:{{top}}px;padding:10px 0px;"><h3>{{toast.title}}</h3><p>{{toast.words}}</p></div>',
-        link: function($scope, $element, $attrs) {
-
-        }
-    }
-});
-
-skDirectives.directive('remindPopup', function() {
-    return {
-	    template: '<div class="remind-pop"  style="left:{{left}}px;position:fixed"><h3>请输入手机号码</h3><p>提醒短信会在开抢前10分钟发出</p><p><input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phone_num"></p><div class="buttons"><a href="javascript:void(0);" ng-click="remind_close()" class="J-cancel-remind-btn">取消</a><a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a></div></div>',
-	controller:'win_position',
-	restrict: 'E',
-        replace: true,
-        link: function($scope, $element, $attrs) {
-
-        }
-
-    }
-});
-
-/* scroll popup */
-skDirectives.directive("scroll", function($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-            if (this.pageYOffset >= 300) {
-                scope.scrollBlk = true;
-            } else {
-                scope.scrollBlk = false;
-            }
-            scope.$apply();
-        });
-    };
-});
