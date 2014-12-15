@@ -81,7 +81,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
                     $scope.status = 2;
                     poll(data.result.advance_order_id);
                 }
-                if (data.code == 201) {
+                else if (data.code == 201) {
                     $scope.toast = popupService.openToast('提示', '请输入正确的验证码');
                     setTimeout(function() {
                         $scope.toast = popupService.closeToast();
@@ -90,16 +90,21 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
                     }, 3000);
                     return;
 
-                } else {
-                    $scope.toast = popupService.openToast('提示', data.result.message);
-                    $scope.checkcode_close();
-                    $scope.buy = buyService.buyEnd();
-                    $scope.checkcode_open = 0;
-                    $rootScope.dealStatus[$scope.dealId] = 1;
+		}
+	    	else if (data.code == 207) {
+                    $scope.toast = popupService.openToast('提示', '您的APP版本过低');
                     setTimeout(function() {
                         $scope.toast = popupService.closeToast();
                         $scope.$apply();
+                        $scope.checkcode_open();
                     }, 3000);
+                    return;
+
+		}
+	       	else {
+                    $scope.checkcode_close();
+                    $scope.buy = buyService.buyEnd();
+                    $rootScope.dealStatus[$scope.dealId] = 1;
                     return;
                 }
             })
@@ -120,7 +125,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
                         location.href = data.result.url;
                         return;
                     }
-                    if (data.code == 201) {
+	    	    else if (data.code == 201) {
                         $scope.status = 1;
                         $scope.storage_flag = 1;
                         $scope.buy = buyService.buyEnd();
@@ -130,7 +135,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
                         $scope.checkcode_open = 0;
                         return;
                     }
-                    if (data.code == 205) {
+		    else if (data.code == 205) {
                         $scope.checkcode_flag = 0;
                         if (poll_count > 5) {
                             clearInterval(poll_timer);
@@ -159,7 +164,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         };
         $scope.storage_flag = 0;
         $scope.remind_open = function() {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 200) {
                     $scope.toast = popupService.openToast('设置成功', '开抢前您将收到购买提醒');
                     $scope.remind = popupService.closeRemind();
@@ -210,7 +215,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
                 }, 3000);
                 return;
             };
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&callback=JSON_CALLBACK').success(function(data) {
                 switch (data.code) {
                     case 200:
                         $scope.toast = popupService.openToast('设置成功', '开抢前您将收到购买提醒');

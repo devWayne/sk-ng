@@ -90,7 +90,7 @@ dealDirectives.directive('toast', function() {
         replace: true,
         transclude: true,
 	controller:'win_position',
-        template: '<div style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:1000;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:40px;left:{{left}}px;top:{{top-150}}px;padding:10px 0px;"><h3>{{toast.title}}</h3><p>{{toast.words}}</p></div>',
+        template: '<div style="font-size:14px;text-align:center;vertical-align:middle;background-color:rgba(0,0,0,1);z-index:99999;position:fixed;width:{{width}}px;height:{{height}}px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;color:#fff;line-height:40px;left:{{left}}px;top:{{top-150}}px;padding:10px 0px;"><h3>{{toast.title}}</h3><p>{{toast.words}}</p></div>',
         link: function($scope, $element, $attrs) {
 
         }
