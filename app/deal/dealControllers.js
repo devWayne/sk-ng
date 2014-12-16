@@ -7,24 +7,34 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
     function($scope, $routeParams, $rootScope, $http, $location, popupService, buyService) {
         $scope.dealId = $routeParams.dealId;
         $scope.checkcode_num = "";
+	//团单信息
         $scope.deal = {};
+	//提示
         $scope.toast = {};
+	//购买状态
         $scope.buy = {};
 
         /**
-         * deal init
-         */
+         *团购初始化 
+ 	 */
+	//没有缓存信息，请求新的数据
         if ($rootScope.dealInfo[$scope.dealId] == undefined) {
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 $scope.deal = data.result;
+		//缓存团单信息
                 $rootScope.dealInfo[$scope.dealId] = $scope.deal;
+		//判断是否是下一期的单子
                 if ($rootScope.dealStatus[$scope.dealId] == 2) {
                     $scope.status = 0;
-                } else if ($rootScope.dealStatus[$scope.dealId] == 1) {
+                } 
+		//如果已经被判定过抢光了，则显示抢光了
+		else if ($rootScope.dealStatus[$scope.dealId] == 1) {
                     $scope.buy = buyService.buyEnd();
                     $rootScope.dealStatus[$scope.dealId] = 1;
                     $scope.checkcode_open = 0;
-                } else {
+                } 
+		//正常获取新的团单状态
+		else {
                     if (data.result.data.status == 1) {
                         $scope.buy = buyService.buyStart();
                     }
@@ -36,7 +46,9 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
 
                 }
             });
-        } else {
+        }
+	//有缓存信息，先渲染页面，异步请求新的状态
+       	else {
             $scope.deal = $rootScope.dealInfo[$scope.dealId];
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/detail?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&callback=JSON_CALLBACK').success(function(data) {
                 if ($rootScope.dealStatus[$scope.dealId] == 2) {
@@ -59,7 +71,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         }
 
         /**
-         * listen checkcode length
+         * 监听验证码输入的位数
          * @param {varType} checkcode_num Description
          * @param {varType} function Description
          * @return {void} description
@@ -71,7 +83,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         });
 
         /**
-         * checkcode
+         * check验证码
          * @return {void} description
          */
         $scope.codecheck = function() {
@@ -111,7 +123,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         };
 
         /**
-         * poll check
+         * 轮询排队
          * @param {varType} advance_order_id Description
          * @return {void} description
          */
@@ -157,12 +169,16 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         };
 
         /**
-         * view control
+         * 视图控制
          */
+
+	//库存为空提示开关
         $scope.storage_close = function() {
             $scope.storage_flag = 0;
         };
         $scope.storage_flag = 0;
+
+	//提醒我开关
         $scope.remind_open = function() {
             $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/join?city_id=' + $rootScope.cityid + '&dealgroup_id=' + $scope.dealId + '&mobile=' + $scope.phone_num + '&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 200) {
@@ -180,6 +196,8 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         $scope.remind_close = function() {
             $scope.remind = popupService.closeRemind();
         }
+
+	//验证码开关
         $scope.checkcode_open = function() {
             $scope.checkcode_num = "";
             $scope.checkcode_flag = 1;
@@ -201,7 +219,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         }
 
         /**
-         * remind check
+         * 提醒我请求
          * @return {void} description
          */
         $scope.remindajax = function() {

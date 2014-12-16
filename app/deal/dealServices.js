@@ -2,6 +2,12 @@
 
 var dealServices = angular.module('dealServices', []);
 
+/**
+ * 控制弹窗状态
+ * @param {varType} popupService Description
+ * @param {varType} function Description
+ * @return {void} description
+ */
 dealServices.factory('popupService', function() {
     return {
         openToast: function(title, words) {

@@ -33,11 +33,11 @@
 
  skApp.run(function($rootScope, $http, $location, $cookies) {
 
-     /**
-      * app init
-      */
+     //团单信息缓存
      $rootScope.dealInfo = [];
+     //团购状态
      $rootScope.dealStatus = [];
+
      $rootScope.buy_status = [];
      $rootScope.dealgroups =[];
      $rootScope.allDeals=[];

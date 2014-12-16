@@ -2,7 +2,12 @@
 
 var dealDirectives = angular.module('dealDirectives', [])
 
-
+/**
+ * 抢状态
+ * @param {varType} dealBuy Description
+ * @param {varType} function Description
+ * @return {void} description
+ */
 dealDirectives.directive('dealBuy', function() {
     return {
         restrict: 'E',
@@ -13,6 +18,9 @@ dealDirectives.directive('dealBuy', function() {
     }
 });
 
+/**
+ * 倒计时
+ */
 dealDirectives.controller('timer', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
         var hT = 60 * 60 * 1000,
@@ -72,6 +80,10 @@ dealDirectives.controller('timer', ['$scope', '$http', '$rootScope',
     }
 ]);
 
+
+/**
+ * 位置居中
+ */
 dealDirectives.controller('win_position',
     function($scope, $element, $attrs, $rootScope, $window) {
         $scope.width = 270;
@@ -83,7 +95,12 @@ dealDirectives.controller('win_position',
 
     });
 
-/* toast */
+/**
+ * 提示信息
+ * @param {varType} toast Description
+ * @param {varType} function Description
+ * @return {void} description
+ */
 dealDirectives.directive('toast', function() {
     return {
         restrict: 'E',
@@ -97,6 +114,12 @@ dealDirectives.directive('toast', function() {
     }
 });
 
+/**
+ * 提醒我
+ * @param {varType} remindPopup Description
+ * @param {varType} function Description
+ * @return {void} description
+ */
 dealDirectives.directive('remindPopup', function() {
     return {
 	    template: '<div class="remind-pop"  style="left:{{left}}px;position:fixed"><h3>请输入手机号码</h3><p>提醒短信会在开抢前10分钟发出</p><p><input type="tel" maxlength="13" class="J-mobileno-remind-input" ng-model="phone_num"></p><div class="buttons"><a href="javascript:void(0);" ng-click="remind_close()" class="J-cancel-remind-btn">取消</a><a href="javascript:void(0);" ng-click="remindajax()" class="J-submit-remind-btn">发送</a></div></div>',
@@ -110,7 +133,13 @@ dealDirectives.directive('remindPopup', function() {
     }
 });
 
-/* scroll popup */
+/**
+ * Scroll滑动
+ * @param {varType} scroll Description
+ * @param {varType} function Description
+ * @param {varType} $window Description
+ * @return {void} description
+ */
 dealDirectives.directive("scroll", function($window) {
     return function(scope, element, attrs) {
         angular.element($window).bind("scroll", function() {

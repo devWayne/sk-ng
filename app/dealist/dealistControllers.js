@@ -36,7 +36,7 @@ dealistControllers.controller('skDealistCtrl', ['$scope', '$http', '$rootScope',
                     $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.dealgroups[1]);
                 }
                 $rootScope.nextdealgroups = data.result.next.dealgroups;
-                $rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.nextdealgroups);
+                //$rootScope.allDeals = angular.extend($rootScope.allDeals, $rootScope.nextdealgroups);
                 angular.forEach($rootScope.nextdealgroups, function(idx, value) {
                     $rootScope.dealStatus[idx.id] = 2;
                 })
