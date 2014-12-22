@@ -87,7 +87,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
          * @return {void} description
          */
         $scope.codecheck = function() {
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&dpid=' + $rootScope.dpid + '&version=' + $rootScope.version + '&city_id=' + $rootScope.cityid + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/verify-captcha?dealgroup_id=' + $scope.dealId + '&captcha=' + $scope.checkcode_num + '&dpid=' + $rootScope.dpid + '&version=' + $rootScope.version + '&city_id=' + $rootScope.cityid +  '&agent='+$rootScope.agent+'&token=!&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 205 && data.result.advance_order_id) {
                     $scope.checkcode_close();
                     $scope.status = 2;
@@ -130,7 +130,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
         var poll = function(advance_order_id) {
             var poll_count = 0;
             var poll_timer = setInterval(function() {
-                $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/poll?advance_order_id=' + advance_order_id + '&dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
+                $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/poll?advance_order_id=' + advance_order_id + '&dealgroup_id=' + $scope.dealId+ '&agent='+$rootScope.agent+'&city_id=' + $rootScope.cityid + '&callback=JSON_CALLBACK').success(function(data) {
                     if (data.code == 200 && data.result.url) {
                         $scope.checkcode_flag = 0;
                         clearInterval(poll_timer);
@@ -202,7 +202,7 @@ dealControllers.controller('skDealCtrl', ['$scope', '$routeParams', '$rootScope'
             $scope.checkcode_num = "";
             $scope.checkcode_flag = 1;
             $scope.checkcode_overlay = 1;
-            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&token=!&callback=JSON_CALLBACK').success(function(data) {
+            $http.jsonp('http://tgapp.51ping.com/qiang/ajax/nt/gen-captcha?dealgroup_id=' + $scope.dealId + '&city_id=' + $rootScope.cityid + '&agent='+$rootScope.agent+'&token=!&callback=JSON_CALLBACK').success(function(data) {
                 if (data.code == 203) {
                     $scope.checkcode_close();
 		    location.href = data.result.login_url;

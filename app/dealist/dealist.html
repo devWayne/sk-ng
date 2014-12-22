@@ -31,7 +31,7 @@
                             <span class="oneprize" ng-class="{true: 'nowprize-soldout', false: 'nowprize'}[status == 1 && $root.dealStatus[deal.id]==1]">￥{{deal.current_price}}</span>
                             <span class="twoprize del">￥{{deal.list_price}}</span>
 
-                            <span ng-if="status == 0 && deal.wanna_join" class='wantbuy'>{{deal.wanna_join}}人想买</span>
+			    <span ng-if="status == 0 && deal.wanna_join" class='wantbuy'><span>{{deal.wanna_join}}</span>人想买</span>
                             <span ng-if="status == 1 && $root.dealStatus[deal.id]!=1" class='dealist-buy'>抢</span>
 			    <span ng-if="status == 1 && $root.dealStatus[deal.id]==1" class='wantbuy'>抢光了</span>
                         </div>
@@ -56,7 +56,7 @@
                             <span class="oneprize nowprize">￥{{deal.current_price}}</span>
                             <span class="twoprize del">￥{{deal.list_price}}</span>
 
-                            <span ng-if="status == 0" class='wantbuy'>{{deal.wanna_join}}人想买</span>
+			    <span ng-if="status == 0" class='wantbuy'><span>{{deal.wanna_join}}<span>人想买</span>
                             <span ng-if="status == 1 && $root.dealStatus[deal.id]!=1" class='dealist-buy'>抢</span>
 			    <span ng-if="status == 1 && $root.dealStatus[deal.id]==1" class='wantbuy'>抢光了</span>
 

@@ -47,6 +47,7 @@
      $rootScope.token = ($location.search()).token ? ($location.search()).token : '';
      $rootScope.version = ($location.search()).version ? ($location.search()).version : '';
      $rootScope.dpid = ($location.search()).dpid ? ($location.search()).dpid : '';
+     $rootScope.agent=  ($location.search()).agent ? ($location.search()).agent : '';
      if ($rootScope.token) $cookies.token = $rootScope.token;
  });
 
